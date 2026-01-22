@@ -1,0 +1,19 @@
+nav:
+  - Accueil: index.md
+  - RNCP:
+      - Bloc 2 – Architecture & Réseau:
+          - Présentation: rncp/bloc-2/index.md
+          - Projet R-Type:
+              - Introduction: rncp/bloc-2/r-type/index.md
+              - Architecture: rncp/bloc-2/r-type/architecture.md
+              - Réseau: rncp/bloc-2/r-type/reseau.md
+              - Sécurité: rncp/bloc-2/r-type/securite.md
+      - Bloc 4 – Intégration & Automatisation:
+          - Présentation: rncp/bloc-4/index.md
+          - Projet AREA:
+              - Introduction: rncp/bloc-4/area/index.md
+              - Architecture: rncp/bloc-4/area/architecture.md
+              - Workflows: rncp/bloc-4/area/workflows.md
+              - Sécurité: rncp/bloc-4/area/securite.md
+  - Annexes:
+      - Veille: annexes/veille.md
