@@ -26,8 +26,12 @@ nav:
           - Présentation: rncp/bloc-4/index.md
           - Projet AREA:
               - Introduction: rncp/bloc-4/area/index.md
-              - Architecture: rncp/bloc-4/area/architecture.md
-              - Workflows: rncp/bloc-4/area/workflows.md
-              - Sécurité: rncp/bloc-4/area/securite.md
+              - Architecture détaillée:
+                  - C20 – Interfaces web et UX: rncp/bloc-4/area/c20_interfaces.md
+                  - C21 – Développement web: rncp/bloc-4/area/c21_frontend.md
+                  - C22 – Frameworks et composants: rncp/bloc-4/area/c22_frameworks.md
+                  - C23 – Développement back-end: rncp/bloc-4/area/c23_backend.md
+                  - C24 – Sécurité back-end: rncp/bloc-4/area/c24_securite.md
+              - Conclusion: rncp/bloc-4/area/conclusion.md
   - Annexes:
       - Veille: annexes/veille.md
