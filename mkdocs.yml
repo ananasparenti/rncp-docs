@@ -7,14 +7,22 @@ theme:
 nav:
   - Accueil: index.md
   - RNCP:
-      - Bloc 2 – Architecture & Réseau:
+      - Bloc 2 – Concevoir une architecture logicielle:
           - Présentation: rncp/bloc-2/index.md
           - Projet R-Type:
               - Introduction: rncp/bloc-2/r-type/index.md
-              - Architecture: rncp/bloc-2/r-type/architecture.md
-              - Réseau: rncp/bloc-2/r-type/reseau.md
-              - Sécurité: rncp/bloc-2/r-type/securite.md
-      - Bloc 4 – Intégration & Automatisation:
+              - Architecture détaillée:
+                  - C6 – Veille technologique & accessibilité: rncp/bloc-2/r-type/c6_veille.md
+                  - C7 – Veille en cybersécurité: rncp/bloc-2/r-type/c7_cybersecurite.md
+                  - C8 – Prototypage de la solution: rncp/bloc-2/r-type/c8_prototypage.md
+                  - C9 – Architecture de la solution: rncp/bloc-2/r-type/c9_architecture.md
+                  - C10 – Implémentation logicielle: rncp/bloc-2/r-type/c10_implentation.md
+                  - C11 – Organisation et segmentation du code: rncp/bloc-2/r-type/c11_segmentation.md
+                  - C12 – Solutions algorithmiques: rncp/bloc-2/r-type/c12_algorithmes.md
+                  - C13 – Persistance des données: rncp/bloc-2/r-type/c13_persistance.md
+                  - C14 – Structures de données: rncp/bloc-2/r-type/c14_structures.md
+              - Conclusion: rncp/bloc-2/r-type/conclusion.md
+      - Bloc 4 – Créer une architecture logicielle pour des applications web:
           - Présentation: rncp/bloc-4/index.md
           - Projet AREA:
               - Introduction: rncp/bloc-4/area/index.md
