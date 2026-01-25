@@ -12,3 +12,14 @@ Les données persistées dans le jeu sont les suivantes :
 </div>
 
 Cette phase d’identification permet de poser un cadre clair avant d’aborder les choix techniques liés aux solutions de persistance, qui seront détaillés dans l’observable suivant.
+
+## 🔎 Observable 2 : Choix de persistance
+
+Suite à l’identification des données à persister dans l’Observable 1, plusieurs solutions de stockage ont été envisagées afin de répondre aux besoins fonctionnels du projet tout en respectant les contraintes techniques, de performance et de sécurité.
+
+Le tableau ci-dessous présente un comparatif des solutions étudiées, avec leurs avantages, inconvénients et cas d’usage typiques :
+
+<div align="center">
+	<img src="../../../../assets/images/c13-comp.png" alt="Comparatif bibliothèques graphiques" width="70%" style="margin: 1em 0;"/>
+	<br><em>Comparatif des solutions de persistance</em>
+</div>
