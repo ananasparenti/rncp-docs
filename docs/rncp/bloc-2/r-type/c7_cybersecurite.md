@@ -705,7 +705,3 @@ C7.2_Veille_Sécurité/
 
 => C7 100% VALIDÉ !
 ```
-
----
-
-**Fin documentation C7** - Copie-colle directement dans ton dossier! 🚀

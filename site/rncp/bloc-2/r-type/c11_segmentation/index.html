@@ -63,6 +63,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#c11-segmentation-du-code-decomposition-en-sous-problemes" class="md-skip">
+          Aller au contenu
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -616,6 +621,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C11 – Organisation et segmentation du code
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -633,6 +658,174 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Objectif
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-modulaire-du-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌐 Architecture modulaire du projet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observables-avec-exemples-concrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observables (avec exemples concrets)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔎 Observables (avec exemples concrets)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mouvement-isole-ecs-oe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Mouvement isolé (ECS, O(E))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ia-ennemie-segmentee-par-comportement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) IA ennemie segmentée par comportement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gestion-de-rooms-cote-serveur-concurrence-et-regles-metier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Gestion de rooms côté serveur (concurrence et règles métier)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-navigation-detats-ui-separation-ui-reseau" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Navigation d’états UI (séparation UI / réseau)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-rendu-fond-defilant-isolement-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Rendu fond défilant (isolement I/O)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategies-de-segmentation-employees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Stratégies de segmentation employées
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefices-performance-adaptabilite-maintenabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📈 Bénéfices (performance, adaptabilité, maintenabilité)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-reutiliser-le-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Comment réutiliser le pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snippet-pret-a-montrer-mouvement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📄 Snippet prêt à montrer (mouvement)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔚 Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1270,6 +1463,165 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Objectif
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-modulaire-du-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌐 Architecture modulaire du projet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observables-avec-exemples-concrets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observables (avec exemples concrets)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔎 Observables (avec exemples concrets)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mouvement-isole-ecs-oe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Mouvement isolé (ECS, O(E))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ia-ennemie-segmentee-par-comportement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) IA ennemie segmentée par comportement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gestion-de-rooms-cote-serveur-concurrence-et-regles-metier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Gestion de rooms côté serveur (concurrence et règles métier)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-navigation-detats-ui-separation-ui-reseau" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Navigation d’états UI (séparation UI / réseau)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-rendu-fond-defilant-isolement-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Rendu fond défilant (isolement I/O)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategies-de-segmentation-employees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Stratégies de segmentation employées
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefices-performance-adaptabilite-maintenabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📈 Bénéfices (performance, adaptabilité, maintenabilité)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-reutiliser-le-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Comment réutiliser le pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snippet-pret-a-montrer-mouvement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📄 Snippet prêt à montrer (mouvement)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔚 Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1286,9 +1638,100 @@
 
 
 
-  <h1>C11 – Organisation et segmentation du code</h1>
-
-
+<h1 id="c11-segmentation-du-code-decomposition-en-sous-problemes">C11 : Segmentation du code (Décomposition en sous-problèmes)</h1>
+<h2 id="objectif">🎯 Objectif</h2>
+<p>Segmenter chaque problème complexe en sous-problèmes pour obtenir des tâches atomiques, optimisées pour la performance, l’adaptabilité et la maintenabilité.</p>
+<hr />
+<h2 id="architecture-modulaire-du-projet">🌐 Architecture modulaire du projet</h2>
+<ul>
+<li><strong>ECS</strong> : données (components) séparées de la logique (systems) dans <code>engine/</code> et <code>game/</code>.</li>
+<li><strong>Couche réseau</strong> : serveur dédié (<code>server/</code>) isolant rooms, protocole, state broadcast.</li>
+<li><strong>Couche client/UI</strong> : états et navigation dans <code>states/</code>, rendu/audio dans <code>graphics/</code>.</li>
+<li><strong>Ressources</strong> : chargement résolu via <code>engine/core</code> et <code>graphics</code>.</li>
+</ul>
+<p>Schéma mental (simple) :
+- Data → Components
+- Logic → Systems
+- Orchestration → Managers/States
+- I/O → Network/Graphics</p>
+<hr />
+<h2 id="observables-avec-exemples-concrets">🔎 Observables (avec exemples concrets)</h2>
+<h3 id="1-mouvement-isole-ecs-oe">1) Mouvement isolé (ECS, O(E))</h3>
+<ul>
+<li>Fichier : MovementSystem.cpp</li>
+<li>Points clés :</li>
+<li>Récupère uniquement <code>Transform</code> + <code>Velocity</code>.</li>
+<li>Mise à jour position <code>O(E)</code> ; clamp optionnel activable (<code>enable_bounds_checking</code>).</li>
+<li>Séparation data/logique → ajout d’autres comportements sans toucher aux composants.</li>
+</ul>
+<h3 id="2-ia-ennemie-segmentee-par-comportement">2) IA ennemie segmentée par comportement</h3>
+<ul>
+<li>Fichier : EnemyAISystem.cpp</li>
+<li>Points clés :</li>
+<li>Cache joueurs, sélection du plus proche, switch de comportements (passive/aggressive/defensive/hunting).</li>
+<li>Callbacks de tir injectables (découplage).</li>
+<li>Complexité contrôlée : recherche puis update unitaire par ennemi.</li>
+</ul>
+<h3 id="3-gestion-de-rooms-cote-serveur-concurrence-et-regles-metier">3) Gestion de rooms côté serveur (concurrence et règles métier)</h3>
+<ul>
+<li>Fichier : RoomManager.cpp</li>
+<li>Points clés :</li>
+<li>Mutex pour sûreté, mapping player→room, règles (solo privé, room pleine).</li>
+<li>Suppression automatique si room vide (invariant local).</li>
+<li>API claire (<code>findOrCreateRoom</code>, <code>findAvailableRoom</code>) → adaptation facile.</li>
+</ul>
+<h3 id="4-navigation-detats-ui-separation-ui-reseau">4) Navigation d’états UI (séparation UI / réseau)</h3>
+<ul>
+<li>Fichier : StateManager.cpp</li>
+<li>Points clés :</li>
+<li>Changement d’état centralisé (<code>changeState</code>), callbacks réseau injectés selon l’état.</li>
+<li>Précondition explicite (impossible de lancer GAME sans connexion).</li>
+<li>Ajout d’un nouvel état = implémentation locale + enregistrement dans le switch.</li>
+</ul>
+<h3 id="5-rendu-fond-defilant-isolement-io">5) Rendu fond défilant (isolement I/O)</h3>
+<ul>
+<li>Fichier : BackgroundRenderer.cpp</li>
+<li>Points clés :</li>
+<li>Chargement via <code>AssetResolver</code>, textures gérées localement.</li>
+<li>Mode scrolling optionnel ; double draw pour tiling.</li>
+<li>Aucune dépendance gameplay → remplaçable sans impacter la logique.</li>
+</ul>
+<hr />
+<h2 id="strategies-de-segmentation-employees">🧩 Stratégies de segmentation employées</h2>
+<ul>
+<li><strong>Séparation data / logique (ECS)</strong> : composants purs, systèmes spécialisés.</li>
+<li><strong>Variantes activables</strong> : ex. bounds check toggle, modes IA, callbacks réseau/UI.</li>
+<li><strong>Responsabilités locales</strong> : RoomManager encapsule règles d’adhésion/suppression ; StateManager encapsule transitions.</li>
+<li><strong>Orchestration par couches</strong> : gameplay dans <code>game/</code>, moteur générique dans <code>engine/</code>, transport dans <code>server/</code>, rendu dans <code>graphics/</code>.</li>
+<li><strong>Points d’extension clairs</strong> : ajouter un composant ou un système n’impacte pas les autres (contrats minimalistes).</li>
+</ul>
+<hr />
+<h2 id="benefices-performance-adaptabilite-maintenabilite">📈 Bénéfices (performance, adaptabilité, maintenabilité)</h2>
+<ul>
+<li><strong>Performance</strong> : passes linéaires <code>O(E)</code> sur des vues de composants ; options activables sans surcoût global.</li>
+<li><strong>Adaptabilité</strong> : comportements IA interchangeables, états UI pluggables, assets/rendu remplaçables.</li>
+<li><strong>Maintenabilité</strong> : contraintes et invariants localisés (rooms, états, mouvement) ; couplage réduit entre couches.</li>
+</ul>
+<hr />
+<h2 id="comment-reutiliser-le-pattern">🛠️ Comment réutiliser le pattern</h2>
+<ol>
+<li><strong>Identifier la donnée</strong> → créer un component minimal (ex. Health, Velocity).</li>
+<li><strong>Isoler la logique</strong> → système dédié qui ne dépend que des composants ciblés.</li>
+<li><strong>Encapsuler les variantes</strong> → flags, callbacks, stratégies (ex. <code>enable_bounds_checking</code>, behaviors IA).</li>
+<li><strong>Garder des points d’entrée clairs</strong> → managers (rooms, states) avec règles explicites.</li>
+<li><strong>Mesurer la complexité</strong> → viser des passes linéaires, éviter les doubles boucles inutiles.</li>
+</ol>
+<hr />
+<h2 id="snippet-pret-a-montrer-mouvement">📄 Snippet prêt à montrer (mouvement)</h2>
+<p>Extrait court et autoportant : MovementSystem.cpp
+- Met en avant : séparation data/logique, O(E), clamp optionnel, effet localisé.</p>
+<hr />
+<h2 id="conclusion">🔚 Conclusion</h2>
+<p>La segmentation dans ce projet s’appuie sur :
+- L’ECS pour découpler données et comportements.
+- Des modules dédiés par responsabilité (mouvement, IA, rooms, états, rendu).
+- Des variantes activables et des callbacks pour adapter sans réécrire.
+Cette approche répond aux exigences de performance, d’adaptabilité et de maintenabilité fixées par la compétence C11.</p>
 
 
 
