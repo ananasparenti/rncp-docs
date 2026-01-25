@@ -1,5 +1,3 @@
-
-
 # C6 : Veille Technologique & Accessibilité
 
 ## 🔎 Observable 1 : Étude comparative
