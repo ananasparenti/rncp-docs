@@ -1,9 +1,4 @@
-# C7 - SÉCURITÉ INFORMATIQUE R-TYPE
-## Documentation complète pour présentation & dossier
-
----
-
-## INTRODUCTION GÉNÉRALE
+# C7 : Veille en cybersécurité
 
 La compétence C7 porte sur la révision régulière des protocoles existants et l'identification des failles de sécurité. Elle se divise en deux observables :
 
@@ -42,15 +37,12 @@ Exemple : CVE-2025-38622
 - 38622 = numéro unique cette année
 ```
 
-### Tableau C7.1 - Les 5 CVE analysées
+### Tableau - Les 5 CVE analysées
 
-| Tech | CVE ID | Description | Date | Sévérité | Impact R-Type | Mitigation |
-|------|--------|-------------|------|----------|---------------|------------|
-| UDP/Linux | CVE-2025-38622 | UFO packet crash (fragmentation IP) | Août 2025 | HIGH (8.8) | Serveur peut crasher via UDP malformés | MAX_PAYLOAD=1400 bytes [Protocol.cpp:18] |
-| UDP | CVE-2025-15529 | Large UDP >1500 bytes causent amplification DoS | Jan 2026 | MEDIUM (6.5) | Attaquant peut surcharger serveur avec gros packets | Magic number 0x4252 + validation taille [Protocol.cpp:18-50] |
-| Boost.Asio | CVE-2020-13616 | TLS hostname verification bypass (récurent) | 2020 | MEDIUM (5.9) | Man-in-the-middle possible si TLS utilisé | UDP raw (pas TLS) + validation IP/port custom |
-| SFML | CVE-2016-10654 | Path traversal - charger images depuis chemins système | 2016 | LOW (3.1) | Asset loading malveillant possible | Assets compilés/embarqués (pas load dynamique) |
-| C++ stdlib | CVE-2025-66570 | Metadata spoofing (fausse IP) | Déc 2025 | CRITICAL (9.8) | Client peut prétendre être autre joueur (cheating) | Validation player_id côté serveur [Server.cpp] |
+<div align="center">
+	<img src="../../../../assets/images/c7-tab1.png" alt="Comparatif bibliothèques graphiques" width="70%" style="margin: 1em 0;"/>
+	<br><em>Analyse des CVE</em>
+</div>
 
 ### Explication détaillée chaque CVE
 
@@ -276,13 +268,10 @@ L'observable attend de voir :
 
 ### Tableau C7.2 - Mes sources de veille
 
-| Source | Type de recherche | Fréquence | Dernière consultation | Actions |
-|--------|-------------------|-----------|----------------------|---------|
-| **CVEDetails.com** | UDP, SFML, Boost.Asio | Hebdomadaire | 24 Jan 2026 | Trouvé CVE-2025-38622 & 15529 |
-| **NVD.NIST.gov** | CVE-2025-38622, CVE-2025-15529 | Hebdomadaire | 24 Jan 2026 | Validé sévérité & impact |
-| **GitHub SFML/Boost Advisories** | Security releases | Mensuel | 15 Jan 2026 | Confirmé pas de faille critique |
-| **OWASP Top 10** | "Unvalidated Input", "Broken Auth" | Mensuel | 20 Jan 2026 | Implémenté screen clamping |
-| **HackerNews Security** | UDP DoS trends, network attacks | Quotidien | 24 Jan 2026 | Ajouté rate limiting en roadmap |
+<div align="center">
+	<img src="../../../../assets/images/c7-sources.png" alt="Comparatif bibliothèques graphiques" width="70%" style="margin: 1em 0;"/>
+	<br><em>Mes sources de veille</em>
+</div>
 
 ### Description détaillée chaque source
 
@@ -716,7 +705,3 @@ C7.2_Veille_Sécurité/
 
 => C7 100% VALIDÉ !
 ```
-
----
-
-**Fin documentation C7** - Copie-colle directement dans ton dossier! 🚀
