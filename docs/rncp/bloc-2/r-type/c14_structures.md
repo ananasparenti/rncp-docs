@@ -15,12 +15,6 @@ Le choix des structures de données a été guidé par les besoins de performanc
 - **Structures à accès direct (O(1))**
 	- `std::unordered_map` : utilisé pour le chargement rapide des textures grâce à des lookups fréquents.
 	- `std::array` : utilisé pour la récupération des touches, adapté à un nombre fixe d’éléments.
-
-<div align="center">
-	<img src="../../../../assets/images/c14-structs.png" alt="Tableau des structures de données utilisées" width="70%" style="margin: 1em 0;"/>
-	<br><em>Tableau des structures de données utilisées</em>
-</div>
-
 ---
 
 ## 🔎 Observable 2 : Justification des choix
