@@ -60,15 +60,15 @@ Le développement du projet R-Type a été guidé par plusieurs contraintes maje
 
 Chaque prototype a eu un impact spécifique sur le projet, avec ses avantages et ses limites :
 
-- Prototype 1
+#### Prototype 1
   - Avantages : Mise en place rapide d’une structure ECS minimale, simplicité du serveur, bonne base pour expérimenter l’architecture.
   - Problèmes : Fonctionnalités limitées, absence d’interface graphique, peu de modularité, difficile à étendre pour des besoins avancés.
 
-- Prototype 2
+#### Prototype 2
   - Avantages : Ajout d’une interface graphique (SFML), serveur plus complexe, début d’intégration de l’ECS dans la logique du jeu.
   - Problèmes : L’ECS n’est pas exploité pleinement, dépendance forte à SFML, modularité insuffisante, complexité accrue pour la maintenance.
 
-- Prototype final
+#### Prototype final
   - Avantages : Utilisation complète de l’ECS, abstraction des bibliothèques réseau et graphiques, remplacement de SFML par SDL2, architecture modulaire et évolutive, meilleure maintenabilité et accessibilité.
   - Problèmes : Demande un effort de refonte, complexité technique plus élevée, nécessité d’une bonne organisation du code.
 
