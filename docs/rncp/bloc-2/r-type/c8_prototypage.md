@@ -15,7 +15,7 @@ Le projet s’est articulé autour de plusieurs prototypes successifs, chacun r�
 - **Problèmes identifiés :** L’ECS n’est pas exploité pleinement, faible modularité et forte dépendance aux bibliothèques externes.
 
 <div align="center">
-	<img src="../../../../assets/images/c8-schema-prototypage.png" alt="Schéma d'évolution des prototypes" width="70%" style="margin: 1em 0;"/>
+	<img src="../../../../assets/images/c8-image.png" alt="Schéma d'évolution des prototypes" width="70%" style="margin: 1em 0;"/>
 	<br><em>Schéma d’évolution des prototypes</em>
 </div>
 
@@ -42,7 +42,7 @@ Le développement du projet R-Type a été guidé par plusieurs contraintes maje
 ### 1. Synthèse des contraintes
 
 <div align="center">
-	<img src="../../../../assets/images/c8-tableau-contraintes.png" alt="Tableau des contraintes du projet" width="70%" style="margin: 1em 0;"/>
+	<img src="../../../../assets/images/c8-tab.png" alt="Tableau des contraintes du projet" width="70%" style="margin: 1em 0;"/>
 	<br><em>Tableau des contraintes du projet</em>
 </div>
 
