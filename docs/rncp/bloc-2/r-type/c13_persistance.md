@@ -23,3 +23,5 @@ Le tableau ci-dessous présente un comparatif des solutions étudiées, avec leu
 	<img src="../../../../assets/images/c13-comp.png" alt="Comparatif bibliothèques graphiques" width="70%" style="margin: 1em 0;"/>
 	<br><em>Comparatif des solutions de persistance</em>
 </div>
+
+Dans la section suivante, nous détaillerons les solutions effectivement retenues pour le projet R-Type, en expliquant les choix réalisés pour chaque type de donnée et les structures utilisées en mémoire.
