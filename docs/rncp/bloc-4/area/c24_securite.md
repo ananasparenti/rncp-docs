@@ -1,5 +1,117 @@
-# C24 : Sécurité back-end
+# C24 — Sécuriser l’application web (sessions, erreurs, bonnes pratiques)
 
-## 🔎 Observable 1 : Sécurité des sessions
+## B4 - C24.1 — Sécurité session et données sensibles
+- **Validation et rafraîchissement de session** : vérification JWT signée (`AUTH_SECRET`), lookup session en base, purge si expirée, redirections `requireAuth`/`requireAdmin`.
 
-## 🔎 Observable 2 : Gestion des erreurs
+	Pourquoi c’est probant : le cookie signé est vérifié côté serveur, la session est croisée avec la base, toute session expirée est supprimée pour empêcher la réutilisation, et l’accès aux pages protégées redirige systématiquement vers le login.
+
+```ts
+// src/lib/auth.ts (extrait)
+const token = cookieMap[AUTH_COOKIE_NAME];
+const jwtResult = await verifyJWT(token, AUTH_SECRET);
+const session = await prisma.session.findUnique({ where: { id: jwtResult.payload.sessionId }, include: { user: true } });
+if (session.expiresAt < new Date()) {
+	await prisma.session.delete({ where: { id: session.id } });
+	return null;
+}
+export const requireAuth = async () => { const session = await auth.api.getSession({ headers: await headers() }); if (!session) redirect("/login"); return session; };
+```
+
+- **Inscription et login sûrs** : validation de mot de passe, hashage, détection doublons, création de session immédiate.
+
+	Pourquoi c’est probant : pas de stockage en clair, contrôle de complexité, rejet des doublons, et provision d’une session immédiatement pour limiter les failles de timing entre inscription et connexion.
+
+```ts
+// src/lib/auth/service.ts (extrait signUp)
+const existingUser = await this.prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+if (existingUser) return { success: false, error: ERRORS.USER_EXISTS };
+const hashedPassword = await hashPassword(password);
+const user = await this.prisma.user.create({
+	data: {
+		id: userId,
+		email: email.toLowerCase(),
+		name,
+		accounts: { create: { id: accountId, accountId: email.toLowerCase(), providerId: "credentials", password: hashedPassword } },
+	},
+});
+const sessionResult = await this.createSession(user.id);
+```
+
+- **Secrets chiffrés et accès restreint** : `protectedProcedure` impose auth, chiffrement `encrypt(value)`, omission du champ `value` dans les listes.
+
+	Pourquoi c’est probant : l’accès est conditionné à l’utilisateur authentifié, la donnée sensible est chiffrée au repos, et jamais renvoyée dans les réponses listées.
+
+```ts
+// src/features/credentials/server/routers.ts (extrait)
+create: protectedProcedure
+	.input(z.object({ name: z.string().min(1), type: z.enum(CredentialType), value: z.string().min(1) }))
+	.mutation(({ ctx, input }) =>
+		prisma.credential.create({ data: { name: input.name, userId: ctx.auth.user.id, type: input.type, value: encrypt(input.value) } }),
+	),
+getMany: protectedProcedure
+	.input(z.object({ page: z.number().default(1), pageSize: z.number().min(5).max(50).default(10), search: z.string().default("") }))
+	.query(async ({ ctx, input }) => prisma.credential.findMany({
+		skip: (input.page - 1) * input.pageSize,
+		take: input.pageSize,
+		where: { userId: ctx.auth.user.id, name: { contains: input.search, mode: "insensitive" } },
+		select: { id: true, name: true, type: true, createdAt: true, updatedAt: true },
+	}));
+```
+
+## B4 - C24.2 — Gestion robuste des erreurs et protections
+- **Validation d’entrée systématique** : Zod bloque payloads invalides/injections, filtre par `userId` pour éviter l’accès croisé.
+
+	Pourquoi c’est probant : empêche les inputs arbitraires, garantit le typage dès l’entrée, et limite l’espace d’attaque par injection ou IDOR (Insecure Direct Object Reference).
+
+```ts
+// src/features/credentials/server/routers.ts (extrait validation)
+input(z.object({ id: z.string() }))
+.query(({ ctx, input }) =>
+	prisma.credential.findUniqueOrThrow({ where: { id: input.id, userId: ctx.auth.user.id } }),
+);
+```
+
+- **Catalogue d’erreurs typées** : erreurs nommées avec codes HTTP adaptés, limite la fuite d’information.
+
+	Pourquoi c’est probant : des erreurs normalisées réduisent le risque de messages verbeux exposant le système et facilitent l’observabilité côté client et monitoring.
+
+```ts
+// src/lib/auth/service.ts (extrait)
+const ERRORS = {
+	INVALID_TOKEN: createError("INVALID_TOKEN", "Invalid or expired token", 401),
+	OAUTH_ERROR: createError("OAUTH_ERROR", "OAuth authentication failed", 400),
+	ACCOUNT_NOT_FOUND: createError("ACCOUNT_NOT_FOUND", "Account not found", 404),
+};
+```
+
+- **Journalisation contrôlée des échecs** : `withApiLogging` capture status, tronque le corps de réponse pour ne pas exposer de données, enregistre aussi les exceptions.
+
+	Pourquoi c’est probant : on garde une traçabilité minimale pour diagnostiquer, tout en évitant d’écrire des payloads sensibles en clair dans les logs et en capturant les erreurs serveur.
+
+```ts
+// src/lib/request-logger.ts (extrait)
+export const withApiLogging = (handler) => {
+	return async (req, context) => {
+		const startedAt = Date.now();
+		let response; let handlerError;
+		try { response = await handler(req, context); return response; }
+		catch (error) { handlerError = error; throw error; }
+		finally {
+			const durationMs = Date.now() - startedAt;
+			const statusCode = response?.status ?? 500;
+			let responseBody = null;
+			if (response) {
+				const clone = response.clone();
+				responseBody = await clone.text();
+			} else if (handlerError instanceof Error) {
+				responseBody = handlerError.message;
+			}
+			try {
+				await logApiRequest({ method: req.method, path: new URL(req.url).pathname, statusCode, responseBody, durationMs, userAgent: req.headers.get("user-agent") });
+			} catch (error) {
+				console.error("Failed to persist API request log", error);
+			}
+		}
+	};
+};
+```
