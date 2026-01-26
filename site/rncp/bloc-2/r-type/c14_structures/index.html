@@ -63,6 +63,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#c14-structures-de-donnees" class="md-skip">
+          Aller au contenu
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -498,7 +503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../c7_cybersecurite/" class="md-nav__link">
+      <a href="../c7_securite-rtype/" class="md-nav__link">
         
   
   
@@ -700,6 +705,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C14 – Structures de données
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -717,6 +742,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#observable-1-structures-de-donnees-utilisees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 1 : Structures de données utilisées
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔎 Observable 1 : Structures de données utilisées">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-synthese-des-structures-utilisees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Synthèse des structures utilisées
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observable-2-justification-des-choix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 2 : Justification des choix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔎 Observable 2 : Justification des choix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-detail-des-choix-et-justifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Détail des choix et justifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1270,6 +1370,72 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#observable-1-structures-de-donnees-utilisees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 1 : Structures de données utilisées
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔎 Observable 1 : Structures de données utilisées">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-synthese-des-structures-utilisees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Synthèse des structures utilisées
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observable-2-justification-des-choix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 2 : Justification des choix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔎 Observable 2 : Justification des choix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-detail-des-choix-et-justifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Détail des choix et justifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1286,9 +1452,71 @@
 
 
 
-  <h1>C14 – Structures de données</h1>
-
-
+<h1 id="c14-structures-de-donnees">C14 : Structures de Données</h1>
+<h2 id="observable-1-structures-de-donnees-utilisees">🔎 Observable 1 : Structures de données utilisées</h2>
+<p>Le choix des structures de données a été guidé par les besoins de performance, de maintenabilité et d’évolutivité de l’application. Différents types de structures ont été sélectionnés en fonction de leur complexité algorithmique et de leur usage dans le projet R-Type.</p>
+<h3 id="1-synthese-des-structures-utilisees">1. Synthèse des structures utilisées</h3>
+<ul>
+<li>
+<p><strong>Structures ordonnées (O(log O))</strong></p>
+<ul>
+<li><code>std::map</code> : utilisé pour stocker les scores des joueurs, permettant un accès ordonné et efficace.</li>
+</ul>
+</li>
+<li>
+<p><strong>Structures séquentielles (O(n))</strong></p>
+<ul>
+<li><code>std::vector</code> : utilisé pour la gestion des noms aléatoires des joueurs, facilitant l’itération séquentielle.</li>
+</ul>
+</li>
+<li>
+<p><strong>Structures à accès direct (O(1))</strong></p>
+<ul>
+<li><code>std::unordered_map</code> : utilisé pour le chargement rapide des textures grâce à des lookups fréquents.</li>
+<li><code>std::array</code> : utilisé pour la récupération des touches, adapté à un nombre fixe d’éléments.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="observable-2-justification-des-choix">🔎 Observable 2 : Justification des choix</h2>
+<p>Chaque structure de données a été choisie pour répondre à un usage précis, en tenant compte de la complexité et des besoins du projet.</p>
+<h3 id="1-detail-des-choix-et-justifications">1. Détail des choix et justifications</h3>
+<ul>
+<li>
+<p><strong>std::map</strong></p>
+<ul>
+<li><em>Usage :</em> Gestion des scores</li>
+<li><em>Complexité :</em> O(log O)</li>
+<li><em>Justification :</em> Permet de maintenir un ordre sur les scores, essentiel pour les classements.</li>
+</ul>
+</li>
+<li>
+<p><strong>std::vector</strong></p>
+<ul>
+<li><em>Usage :</em> Stockage des noms aléatoires des joueurs</li>
+<li><em>Complexité :</em> O(n)</li>
+<li><em>Justification :</em> Idéal pour l’itération séquentielle et la gestion dynamique de la taille.</li>
+</ul>
+</li>
+<li>
+<p><strong>std::unordered_map</strong></p>
+<ul>
+<li><em>Usage :</em> Chargement des textures</li>
+<li><em>Complexité :</em> O(1)</li>
+<li><em>Justification :</em> Lookup très rapide, adapté à des accès fréquents et non ordonnés.</li>
+</ul>
+</li>
+<li>
+<p><strong>std::array</strong></p>
+<ul>
+<li><em>Usage :</em> Récupération des touches</li>
+<li><em>Complexité :</em> O(1)</li>
+<li><em>Justification :</em> Nombre de touches fixe, accès direct et rapide.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>Ces choix de structures de données permettent d’optimiser les performances de l’application tout en assurant une bonne maintenabilité et une évolutivité du code.</p>
 
 
 

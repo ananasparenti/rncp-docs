@@ -63,6 +63,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#c13-persistance-des-donnees" class="md-skip">
+          Aller au contenu
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -498,7 +503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../c7_cybersecurite/" class="md-nav__link">
+      <a href="../c7_securite-rtype/" class="md-nav__link">
         
   
   
@@ -672,6 +677,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C13 – Persistance des données
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -689,6 +714,47 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#observable-1-choix-de-persistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 1 : Choix de persistance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observable-2-choix-de-persistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 2 : Choix de persistance
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1270,6 +1336,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#observable-1-choix-de-persistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 1 : Choix de persistance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observable-2-choix-de-persistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 2 : Choix de persistance
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1286,9 +1384,25 @@
 
 
 
-  <h1>C13 – Persistance des données</h1>
+<h1 id="c13-persistance-des-donnees">C13 : Persistance des données</h1>
+<h2 id="observable-1-choix-de-persistance">🔎 Observable 1 : Choix de persistance</h2>
+<p>Plusieurs types de données doivent être conservés afin d’assurer le bon fonctionnement de l’application, la continuité de l’expérience utilisateur et le respect des besoins fonctionnels du projet.</p>
+<p>Les données persistées dans le jeu sont les suivantes :</p>
+<div align="center">
+    <img src="../../../../assets/images/c13-données-stock.png" alt="Comparatif bibliothèques graphiques" width="70%" style="margin: 1em 0;"/>
+    <br><em>Données persistées du projet</em>
+</div>
 
+<p>Cette phase d’identification permet de poser un cadre clair avant d’aborder les choix techniques liés aux solutions de persistance, qui seront détaillés dans l’observable suivant.</p>
+<h2 id="observable-2-choix-de-persistance">🔎 Observable 2 : Choix de persistance</h2>
+<p>Suite à l’identification des données à persister dans l’Observable 1, plusieurs solutions de stockage ont été envisagées afin de répondre aux besoins fonctionnels du projet tout en respectant les contraintes techniques, de performance et de sécurité.</p>
+<p>Le tableau ci-dessous présente un comparatif des solutions étudiées, avec leurs avantages, inconvénients et cas d’usage typiques :</p>
+<div align="center">
+    <img src="../../../../assets/images/c13-comp.png" alt="Comparatif bibliothèques graphiques" width="70%" style="margin: 1em 0;"/>
+    <br><em>Comparatif des solutions de persistance</em>
+</div>
 
+<p>Dans la section suivante, nous détaillerons les solutions effectivement retenues pour le projet R-Type, en expliquant les choix réalisés pour chaque type de donnée et les structures utilisées en mémoire.</p>
 
 
 

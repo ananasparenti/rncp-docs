@@ -13,7 +13,7 @@ nav:
               - Introduction: rncp/bloc-2/r-type/index.md
               - Architecture détaillée:
                   - C6 – Veille technologique & accessibilité: rncp/bloc-2/r-type/c6_veille.md
-                  - C7 – Veille en cybersécurité: rncp/bloc-2/r-type/c7_cybersecurite.md
+                  - C7 – Veille en cybersécurité: rncp/bloc-2/r-type/c7_securite-rtype.md
                   - C8 – Prototypage de la solution: rncp/bloc-2/r-type/c8_prototypage.md
                   - C9 – Architecture de la solution: rncp/bloc-2/r-type/c9_architecture.md
                   - C10 – Implémentation logicielle: rncp/bloc-2/r-type/c10_implentation.md

@@ -46,14 +46,6 @@ Le développement du projet R-Type a été guidé par plusieurs contraintes maje
 	<br><em>Tableau des contraintes du projet</em>
 </div>
 
-| Contraintes                | Description                        | Impact                        |
-|----------------------------|------------------------------------|-------------------------------|
-| Multijoueur en temps réel  | 4 joueurs en simultané             | Latences très faibles         |
-| Performance réseau         | Bande passante limitée             | Compression nécessaire        |
-| Accessibilité              | Changement de touche, daltonisme   | Paramétrage de l’utilisateur  |
-| Maintenabilité             | Projet long terme                  | Architecture propre           |
-| Temps de développement     | Délais étudiants                   | Réutilisation maximale        |
-
 ---
 
 ### 2. Impact sur le prototypage

@@ -17,9 +17,3 @@ Créer un jeu complet et fonctionnel, incluant :
 - Des mécaniques de jeu fluides
 - Gestion des collisions et de l’IA des ennemis
 - Système de niveaux et de progression
-
----
-
-> ℹ️ **À ajouter :**
-> - Vidéo de démonstration du jeu
-> - Captures d’écran et visuels

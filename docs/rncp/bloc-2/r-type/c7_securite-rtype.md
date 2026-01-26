@@ -14,8 +14,8 @@ R-Type utilise UDP pour la communication réseau temps réel. J'ai étudié et i
 ### Tableau des CVE analysées
 
 <div align="center">
-	<img src="../../../../assets/images/tableau_veille_c7.png" alt="Comparatif bibliothèques graphiques" width="70%" style="margin: 1em 0;"/>
-	<br><em>Comparatif des bibliothèques graphiques</em>
+	<img src="../../../../assets/images/c7-tableau_veille.png" alt="Les CVE analysés" width="70%" style="margin: 1em 0;"/>
+	<br><em>Les CVE analysés</em>
 </div>
 ---
 
