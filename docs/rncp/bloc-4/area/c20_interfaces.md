@@ -52,9 +52,24 @@ En s’inspirant de ces recommandations, nous avons ajouté plusieurs fonctionna
 
 ## 🔎 Observable 3 : Justification des choix
 
-(cf : Schéma simple du parcours utilisateur)
+```mermaid
+graph TD
+    Connexion --> Dashboard
+    Dashboard -->|Barre de navigation| DashboardSection
+    Dashboard -->|Barre de navigation| Service
+    Dashboard -->|Barre de navigation| Credentials
+    Dashboard -->|Barre de navigation| Executions
+    Dashboard -->|Barre de navigation| Settings
+    DashboardSection[Dashboard]
+    Service[Service]
+    Credentials[Credentials]
+    Executions[Executions]
+    Settings[Settings]
+```
 
-Les choix ergonomiques et l’agencement des interfaces ont été pensés pour simplifier l’usage d’une application complexe.  
-Les écrans suivent un parcours logique, avec les actions principales mises en avant et les informations secondaires accessibles sans surcharge visuelle.  
+Les choix ergonomiques et l’agencement des interfaces ont été pensés pour rendre l’application simple et intuitive, tant sur le web que sur mobile.  
+Les écrans suivent un parcours logique, avec les actions principales clairement mises en avant, tandis que les informations secondaires restent accessibles sans surcharge visuelle.  
+La cohérence des **boutons, des couleurs et des composants** à travers toutes les interfaces renforce la compréhension et facilite la navigation.  
 
-Ces décisions visent à offrir une interface intuitive, cohérente et facilement utilisable sans formation préalable.
+Ces décisions ont pour objectif d’offrir une expérience fluide et compréhensible, utilisable sans formation préalable.
+

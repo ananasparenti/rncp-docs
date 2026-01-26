@@ -1458,9 +1458,22 @@
 - une navigation claire et utilisable sans dépendre exclusivement de la souris.</p>
 <h2 id="observable-3-justification-des-choix">🔎 Observable 3 : Justification des choix</h2>
 <p>(cf : Schéma simple du parcours utilisateur)</p>
-<p>Les choix ergonomiques et l’agencement des interfaces ont été pensés pour simplifier l’usage d’une application complexe.<br />
-Les écrans suivent un parcours logique, avec les actions principales mises en avant et les informations secondaires accessibles sans surcharge visuelle.  </p>
-<p>Ces décisions visent à offrir une interface intuitive, cohérente et facilement utilisable sans formation préalable.</p>
+<pre class="mermaid"><code>graph TD
+    Connexion --&gt; Dashboard
+    Dashboard --&gt;|Barre de navigation| DashboardSection
+    Dashboard --&gt;|Barre de navigation| Service
+    Dashboard --&gt;|Barre de navigation| Credentials
+    Dashboard --&gt;|Barre de navigation| Executions
+    Dashboard --&gt;|Barre de navigation| Settings
+    DashboardSection[Dashboard]
+    Service[Service]
+    Credentials[Credentials]
+    Executions[Executions]
+    Settings[Settings]</code></pre>
+<p>Les choix ergonomiques et l’agencement des interfaces ont été pensés pour rendre l’application simple et intuitive, tant sur le web que sur mobile.<br />
+Les écrans suivent un parcours logique, avec les actions principales clairement mises en avant, tandis que les informations secondaires restent accessibles sans surcharge visuelle.<br />
+La cohérence des <strong>boutons, des couleurs et des composants</strong> à travers toutes les interfaces renforce la compréhension et facilite la navigation.  </p>
+<p>Ces décisions ont pour objectif d’offrir une expérience fluide et compréhensible, utilisable sans formation préalable.</p>
 
 
 
