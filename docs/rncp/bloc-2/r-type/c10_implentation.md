@@ -1,4 +1,4 @@
-## 🚀 SLIDE 10 : C10 Observable 1 – Implémentation
+## 🔎 Observable 1 :  Implémentation de l’architecture
 
 ### Clean Code & RAII
 
@@ -23,7 +23,7 @@ class Engine {
 
 ---
 
-## 🕹️ SLIDE 11 : C10 Observable 1 – Exemple: Mouvement Joueur
+## 🔎 Observable 1 : Exemple: Mouvement Joueur
 
 ### PlayerMovementSystem – La vraie complexité
 
@@ -58,7 +58,7 @@ void PlayerMovementSystem::update_entity(EntityId e, float dt) {
 
 ---
 
-## 🤖 SLIDE 12 : C10 Observable 1 – Exemple: IA Ennemis
+## 🔎 Observable 1 : Exemple: IA Ennemis
 
 ### EnemyAISystem – Strategy Pattern
 
@@ -91,7 +91,7 @@ if (shoot_timers_[entity] <= 0.0f && shoot_callback_) {
 
 ---
 
-## 📡 SLIDE 13 : C10 Observable 2 – Design Patterns
+## 🔎 Observable 2 : Design Patterns
 
 ### Registry, Service Locator, Strategy
 
@@ -105,7 +105,7 @@ if (shoot_timers_[entity] <= 0.0f && shoot_callback_) {
 
 ---
 
-## 🌐 SLIDE 14 : C10 Observable 2 – Réseau Asynchrone
+## 🔎 Observable 2 : Réseau Asynchrone
 
 ### UDP Async + Validation
 

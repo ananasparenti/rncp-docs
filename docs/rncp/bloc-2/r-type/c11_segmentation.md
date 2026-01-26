@@ -1,11 +1,13 @@
-# C11 : Segmentation du code (Décomposition en sous-problèmes)
+# C11 : Implémentation logicielle
 
 ## 🎯 Objectif
 Segmenter chaque problème complexe en sous-problèmes pour obtenir des tâches atomiques, optimisées pour la performance, l’adaptabilité et la maintenabilité.
 
 ---
 
-## 🌐 Architecture modulaire du projet
+## 🔎 Observable 1 : Organisation du code
+
+### 🌐 Architecture modulaire du projet
 - **ECS** : données (components) séparées de la logique (systems) dans `engine/` et `game/`.
 - **Couche réseau** : serveur dédié (`server/`) isolant rooms, protocole, state broadcast.
 - **Couche client/UI** : états et navigation dans `states/`, rendu/audio dans `graphics/`.
@@ -18,8 +20,6 @@ Schéma mental (simple) :
 - I/O → Network/Graphics
 
 ---
-
-## 🔎 Observables (avec exemples concrets)
 
 ### 1) Mouvement isolé (ECS, O(E))
 - Fichier : MovementSystem.cpp

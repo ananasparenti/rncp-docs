@@ -1,4 +1,4 @@
-## 🏗️ SLIDE 2 : C9 Observable 1 – Choix d'Architecture
+## 🔎 Observable 1 : Choix d'Architecture
 
 ### Architecture Client/Serveur + ECS
 
@@ -29,7 +29,7 @@
 
 ---
 
-## 🔄 SLIDE 3 : C9 Observable 1 – Pipeline Moteur
+## 🔎 Observable 1 : Pipeline Moteur
 
 ### Engine::update() – Le cœur du système
 
@@ -58,7 +58,7 @@ void Engine::update() {
 
 ---
 
-## 🧩 SLIDE 4 : C9 Observable 1 – Pattern ECS
+## 🔎 Observable 1 : Pattern ECS
 
 ### Template System<ComponentTypes...>
 
@@ -82,7 +82,7 @@ class System : public ISystem {
 
 ---
 
-## 🔌 SLIDE 5 : C9 Observable 2 – Intégration Technique
+## 🔎 Observable 2 : Intégration Technique
 
 ### Gestion du Lifecycle & Injection de Dépendances
 
@@ -106,7 +106,7 @@ T* SystemManager::register_system(Args&&... args) {
 
 ---
 
-## 🎯 SLIDE 6 : C9 Observable 2 – Registry Composants
+## 🔎 Observable 2 : Registry Composants
 
 ### Allocation Auto des Type IDs
 
@@ -134,7 +134,7 @@ inline ComponentTypeId allocate_component_type_id() {
 
 ---
 
-## 🌐 SLIDE 7 : C9 Observable 2 – Serveur et Intégration Réseau
+## 🔎 Observable 2 : – Serveur et Intégration Réseau
 
 ### Initialisation Serveur
 
@@ -161,7 +161,7 @@ GameServer::GameServer(Asamio::IoContext& io, uint16_t port)
 
 ---
 
-## 📁 SLIDE 8 : C9 Observable 2 – Organisation Dossiers
+## 🔎 Observable 2 : – Organisation Dossiers
 
 ### Modularité par Domaine
 
@@ -186,7 +186,7 @@ src/
 
 ---
 
-## 🎁 SLIDE 9 : C9 – Pérennité & Extensibilité
+## 🔎 Observable 2 : Pérennité & Extensibilité
 
 ### Comme ajouter une nouvelle feature?
 

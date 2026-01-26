@@ -1,15 +1,12 @@
 # C7 - SÉCURITÉ INFORMATIQUE R-TYPE
-## Documentation complète et vérifiable
 
 ---
-
-## INTRODUCTION
 
 R-Type utilise UDP pour la communication réseau temps réel. J'ai étudié et implémenté les bonnes pratiques sécurité basées sur des CVE réelles et standards (OWASP, RFC 768).
 
 ---
 
-## C7.1 - ÉTUDE SÉCURITÉ INFORMATIQUE
+## 🔎 Observable 1 : ÉTUDE DES FAILLES DE SECURITÉ
 
 ### Tableau des CVE analysées
 
@@ -186,7 +183,7 @@ if (proj_data.projectile.room_id != enemy_comp.room_id) continue;
 
 ---
 
-## C7.2 - VEILLE SÉCURITÉ INFORMATIQUE
+## 🔎 Observable 2 : VEILLE SÉCURITÉ INFORMATIQUE
 
 ### Sources de veille consultées
 
