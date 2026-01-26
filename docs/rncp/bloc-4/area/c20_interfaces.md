@@ -7,16 +7,31 @@ Les interfaces web du projet ACTION-REACTION ont été conçues afin d’offrir 
 L’organisation des vues repose sur une hiérarchie visuelle claire, mettant en avant les actions principales et limitant la surcharge d’informations. La navigation a été pensée pour accompagner l’utilisateur tout au long de son parcours, depuis la connexion jusqu’à la configuration complète d’une automatisation, tout en réduisant le nombre d’interactions nécessaires.
 
 - **Capture login / formulaire**  
-    ![Capture d’écran du formulaire de connexion, affichant des labels explicites et un message d’erreur en cas de saisie incorrecte.](chemin/vers/capture-login.png)
-    Les champs de formulaire sont accompagnés de labels explicites et de messages d’erreur clairs afin de faciliter la compréhension et l’accessibilité.
+<div align="center">
+    <img src="../../../../assets/images/c20-login_screen.png" alt="Bannière Action-Reaction" width="40%" style="margin: 2em 0;"/>
+    <br><em>Les champs de formulaire sont accompagnés de labels explicites et de messages d’erreur clairs afin de faciliter la compréhension et l’accessibilité.</em>
+</div>
 
-- **Capture dashboard**  
-    ![Capture d’écran du tableau de bord, mettant en avant la lisibilité et la hiérarchie visuelle des informations.](chemin/vers/capture-dashboard.png)
-    L’interface du dashboard privilégie la lisibilité, avec une hiérarchie visuelle claire pour guider l’utilisateur vers les actions principales.
+- **Capture Workflow**
+<div align="center">
+    <img src="../../../../assets/images/c20-workflow.png" alt="Bannière Action-Reaction" width="80%" style="margin: 2em 0;"/>
+    <br><em>L’interface du dashboard workflow privilégie la lisibilité, avec une hiérarchie visuelle claire pour guider l’utilisateur vers les actions principales.</em>
+</div>
 
 - **Capture création des paramètres**  
-    ![Capture d’écran du parcours de création d’une AREA, illustrant la clarté du cheminement utilisateur.](chemin/vers/capture-creation-area.png)  
-    Le parcours de création d’une AREA est découpé en étapes logiques, offrant un cheminement clair et progressif pour l’utilisateur.
+<div align="center">
+    <img src="../../../../assets/images/c20-login_screen.png" alt="Bannière Action-Reaction" width="40%" style="margin: 2em 0;"/>
+    <br><em>Le parcours de création d’une AREA est découpé en étapes logiques, offrant un cheminement clair et progressif pour l’utilisateur.</em>
+</div>
+
+<div align="center" style="display: flex; justify-content: center; gap: 2em;">
+    <img src="../../../../assets/images/c20-mobile_login_screen.jpg" alt="Capture d’écran mobile portrait 1" width="30%" style="margin: 2em 0; display:inline-block; vertical-align:top;"/>
+    <img src="../../../../assets/images/c20-mobile_workflow.jpg" alt="Capture d’écran mobile portrait 2" width="30%" style="margin: 2em 0; display:inline-block; vertical-align:top;"/>
+    <img src="../../../../assets/images/c20-mobile_services.png" alt="Capture d’écran mobile portrait 3" width="30%" style="margin: 2em 0; display:inline-block; vertical-align:top;"/>
+</div>
+<div align="center">
+    <em>Exemples d’écrans sur mobile pour illustrer l’adaptabilité et l’ergonomie sur smartphone.</em>
+</div>
 
 ## 🔎 Observable 2 : Accessibilité
 
