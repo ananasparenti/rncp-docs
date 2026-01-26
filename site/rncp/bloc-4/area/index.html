@@ -63,6 +63,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#introduction-au-projet-supraforce" class="md-skip">
+          Aller au contenu
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -900,6 +905,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -917,6 +942,36 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectifs-du-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objectifs du projet
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1268,6 +1323,27 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectifs-du-projet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objectifs du projet
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1284,9 +1360,29 @@
 
 
 
-  <h1>Introduction</h1>
+<h1 id="introduction-au-projet-supraforce">Introduction au projet SupraForce</h1>
+<p>Ce projet consiste à concevoir une <em>plateforme d’automatisation</em> inspirée de services tels que <em>IFTTT</em> ou <em>Zapier</em>, permettant d’interconnecter différents services numériques entre eux à travers des règles Action → REAction.</p>
+<div align="center">
+    <img src="../../../assets/images/supraforce-intro.png" alt="Bannière Action-Reaction" width="90%" style="margin: 2em 0;"/>
+</div>
 
-
+<p>L’utilisateur peut créer des scénarios automatisés appelés AREA, qui déclenchent automatiquement une réaction lorsqu’un événement précis survient sur un service donné (réception d’un email, création d’un fichier, événement temporel, etc.).</p>
+<p>Le projet repose sur une architecture client–serveur :
+- un serveur applicatif centralisant toute la logique métier,
+- un client web,
+- un client mobile.</p>
+<p>Les clients servant uniquement d’interface utilisateur via une API REST.</p>
+<h2 id="objectifs-du-projet">Objectifs du projet</h2>
+<p>Créer une plateforme d’automatisation complète, modulaire et extensible, incluant :
+- Une gestion complète des utilisateurs (inscription, authentification, OAuth2)
+- Un système de services interconnectables (Google, Mail, Timer, etc.)
+- La définition d’Actions déclenchant des événements
+- La définition de Réactions exécutant des tâches automatisées
+- Un moteur de hooks permettant l’exécution automatique des AREA
+- Une API REST claire et documentée
+- Une interface web et mobile accessibles et intuitives
+- Un déploiement via Docker Compose garantissant la portabilité du projet</p>
+<p>L’objectif n’est pas de réinventer les services existants, mais d’assembler intelligemment des briques logicielles afin de proposer une solution robuste, évolutive et maintenable, mettant l’accent sur l’architecture, l’intégration et la qualité globale du système.</p>
 
 
 

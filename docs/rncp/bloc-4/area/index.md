@@ -2,7 +2,9 @@
 
 Ce projet consiste à concevoir une *plateforme d’automatisation* inspirée de services tels que *IFTTT* ou *Zapier*, permettant d’interconnecter différents services numériques entre eux à travers des règles Action → REAction.
 
-<div align="center"> <img src="../../../../assets/images/area_banner.jpg" alt="Bannière Action-Reaction" width="60%" style="margin: 1em 0;"/> </div>
+<div align="center">
+    <img src="../../../assets/images/supraforce-intro.png" alt="Bannière Action-Reaction" width="90%" style="margin: 2em 0;"/>
+</div>
 
 L’utilisateur peut créer des scénarios automatisés appelés AREA, qui déclenchent automatiquement une réaction lorsqu’un événement précis survient sur un service donné (réception d’un email, création d’un fichier, événement temporel, etc.).
 

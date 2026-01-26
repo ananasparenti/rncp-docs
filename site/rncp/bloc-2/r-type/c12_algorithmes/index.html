@@ -2154,81 +2154,81 @@ Chaque sprite reçoit une "boîte invisible" rectangulaire (bounding box). Si de
 - Ils se chevauchent sur l'axe X <strong>ET</strong>
 - Ils se chevauchent sur l'axe Y</p>
 <h4 id="implementation-r-type"><strong>Implémentation R-Type</strong></h4>
-<pre><code class="language-cpp">/**
- * @brief Détection de collision AABB O(1)
- * 
- * Basé sur Separating Axis Theorem (SAT) 2D :
- * Deux rectangles axis-aligned se chevauchent SSI 
- * ils se chevauchent sur X ET Y
- * 
- * Complexité : O(1) par paire testée
- * Utilisé dans : Unity, Godot, SFML, UE4
- */
-bool CollisionSystem::checkAABB(
-    float x1, float y1, float w1, float h1,  // Projectile
-    float x2, float y2, float w2, float h2   // Ennemi
-) const {
-    // Condition 1 : Bord gauche proj &lt; bord droit ennemi
-    // Condition 2 : Bord droit proj &gt; bord gauche ennemi
-    // Condition 3 : Bord haut proj &lt; bord bas ennemi
-    // Condition 4 : Bord bas proj &gt; bord haut ennemi
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * @brief Détection de collision AABB O(1)</span>
+<span class="cm"> * </span>
+<span class="cm"> * Basé sur Separating Axis Theorem (SAT) 2D :</span>
+<span class="cm"> * Deux rectangles axis-aligned se chevauchent SSI </span>
+<span class="cm"> * ils se chevauchent sur X ET Y</span>
+<span class="cm"> * </span>
+<span class="cm"> * Complexité : O(1) par paire testée</span>
+<span class="cm"> * Utilisé dans : Unity, Godot, SFML, UE4</span>
+<span class="cm"> */</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">CollisionSystem::checkAABB</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">h1</span><span class="p">,</span><span class="w">  </span><span class="c1">// Projectile</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">w2</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">h2</span><span class="w">   </span><span class="c1">// Ennemi</span>
+<span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Condition 1 : Bord gauche proj &lt; bord droit ennemi</span>
+<span class="w">    </span><span class="c1">// Condition 2 : Bord droit proj &gt; bord gauche ennemi</span>
+<span class="w">    </span><span class="c1">// Condition 3 : Bord haut proj &lt; bord bas ennemi</span>
+<span class="w">    </span><span class="c1">// Condition 4 : Bord bas proj &gt; bord haut ennemi</span>
 
-    return x1 &lt; x2 + w2 &amp;&amp;      // Gauche proj avant droit ennemi
-           x1 + w1 &gt; x2 &amp;&amp;      // Droit proj après gauche ennemi
-           y1 &lt; y2 + h2 &amp;&amp;      // Haut proj avant bas ennemi
-           y1 + h1 &gt; y2;        // Bas proj après haut ennemi
-}
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">      </span><span class="c1">// Gauche proj avant droit ennemi</span>
+<span class="w">           </span><span class="n">x1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">      </span><span class="c1">// Droit proj après gauche ennemi</span>
+<span class="w">           </span><span class="n">y1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">      </span><span class="c1">// Haut proj avant bas ennemi</span>
+<span class="w">           </span><span class="n">y1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">y2</span><span class="p">;</span><span class="w">        </span><span class="c1">// Bas proj après haut ennemi</span>
+<span class="p">}</span>
 
-// Utilisation dans check_player_projectiles_vs_enemies()
-void CollisionSystem::check_player_projectiles_vs_enemies(
-    ProjectileSystem* projectile_system,
-    std::function&lt;void(uint32_t enemy_id, int damage, uint32_t owner_id)&gt;
-        on_enemy_hit) {
+<span class="c1">// Utilisation dans check_player_projectiles_vs_enemies()</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">CollisionSystem::check_player_projectiles_vs_enemies</span><span class="p">(</span>
+<span class="w">    </span><span class="n">ProjectileSystem</span><span class="o">*</span><span class="w"> </span><span class="n">projectile_system</span><span class="p">,</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">enemy_id</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">damage</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">owner_id</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">on_enemy_hit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 
-    auto projectiles = projectile_system-&gt;get_projectiles();
-    auto&amp; enemy_components = engine_.get_system_manager()
-                                 .get_component_manager()
-                                 .get_all_components&lt;Enemy&gt;();
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">projectiles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projectile_system</span><span class="o">-&gt;</span><span class="n">get_projectiles</span><span class="p">();</span>
+<span class="w">    </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">enemy_components</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine_</span><span class="p">.</span><span class="n">get_system_manager</span><span class="p">()</span>
+<span class="w">                                 </span><span class="p">.</span><span class="n">get_component_manager</span><span class="p">()</span>
+<span class="w">                                 </span><span class="p">.</span><span class="n">get_all_components</span><span class="o">&lt;</span><span class="n">Enemy</span><span class="o">&gt;</span><span class="p">();</span>
 
-    for (size_t i = 0; i &lt; projectiles.size(); ++i) {
-        const auto&amp; proj_data = projectiles[i];
-        if (!proj_data.projectile.active || proj_data.projectile.ttl &lt;= 0.0F)
-            continue;  // Early exit : skip projectiles morts
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">projectiles</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">proj_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projectiles</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">proj_data</span><span class="p">.</span><span class="n">projectile</span><span class="p">.</span><span class="n">active</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">proj_data</span><span class="p">.</span><span class="n">projectile</span><span class="p">.</span><span class="n">ttl</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0F</span><span class="p">)</span>
+<span class="w">            </span><span class="k">continue</span><span class="p">;</span><span class="w">  </span><span class="c1">// Early exit : skip projectiles morts</span>
 
-        for (const auto&amp; [enemy_id, enemy_comp] : enemy_components) {
-            // Skip destroyed or dead enemies
-            if (enemy_comp.is_destroyed || enemy_comp.health &lt;= 0) 
-                continue;  // Early exit : skip ennemis morts
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="p">[</span><span class="n">enemy_id</span><span class="p">,</span><span class="w"> </span><span class="n">enemy_comp</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">enemy_components</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Skip destroyed or dead enemies</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">enemy_comp</span><span class="p">.</span><span class="n">is_destroyed</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">enemy_comp</span><span class="p">.</span><span class="n">health</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">continue</span><span class="p">;</span><span class="w">  </span><span class="c1">// Early exit : skip ennemis morts</span>
 
-            // Room check : projectile doit être même salle
-            if (proj_data.projectile.room_id != enemy_comp.room_id) 
-                continue;  // Early exit : skip autre room (-80% checks)
+<span class="w">            </span><span class="c1">// Room check : projectile doit être même salle</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">proj_data</span><span class="p">.</span><span class="n">projectile</span><span class="p">.</span><span class="n">room_id</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">enemy_comp</span><span class="p">.</span><span class="n">room_id</span><span class="p">)</span><span class="w"> </span>
+<span class="w">                </span><span class="k">continue</span><span class="p">;</span><span class="w">  </span><span class="c1">// Early exit : skip autre room (-80% checks)</span>
 
-            auto* enemy_tf = engine_.get_component&lt;rtype::engine::Transform&gt;(enemy_id);
-            if (!enemy_tf) continue;  // Early exit : skip sans transform
+<span class="w">            </span><span class="k">auto</span><span class="o">*</span><span class="w"> </span><span class="n">enemy_tf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engine_</span><span class="p">.</span><span class="n">get_component</span><span class="o">&lt;</span><span class="n">rtype</span><span class="o">::</span><span class="n">engine</span><span class="o">::</span><span class="n">Transform</span><span class="o">&gt;</span><span class="p">(</span><span class="n">enemy_id</span><span class="p">);</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">enemy_tf</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w">  </span><span class="c1">// Early exit : skip sans transform</span>
 
-            // AABB check O(1)
-            if (checkAABB(proj_data.x, proj_data.y, 10.0F, 10.0F,
-                          enemy_tf-&gt;x, enemy_tf-&gt;y, 40.0F, 30.0F)) {
+<span class="w">            </span><span class="c1">// AABB check O(1)</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">checkAABB</span><span class="p">(</span><span class="n">proj_data</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">proj_data</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0F</span><span class="p">,</span><span class="w"> </span><span class="mf">10.0F</span><span class="p">,</span>
+<span class="w">                          </span><span class="n">enemy_tf</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">enemy_tf</span><span class="o">-&gt;</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="mf">40.0F</span><span class="p">,</span><span class="w"> </span><span class="mf">30.0F</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 
-                // Collision détectée !
-                projectile_system-&gt;deactivate_projectile(i);
-                if (on_enemy_hit) {
-                    on_enemy_hit(enemy_id, 
-                                damage_config_.player_projectile_damage,
-                                proj_data.projectile.owner_id);
-                }
-                break;  // Projectile destroyed, skip remaining enemies
-            }
-        }
-    }
-}
-</code></pre>
+<span class="w">                </span><span class="c1">// Collision détectée !</span>
+<span class="w">                </span><span class="n">projectile_system</span><span class="o">-&gt;</span><span class="n">deactivate_projectile</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">on_enemy_hit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">on_enemy_hit</span><span class="p">(</span><span class="n">enemy_id</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                                </span><span class="n">damage_config_</span><span class="p">.</span><span class="n">player_projectile_damage</span><span class="p">,</span>
+<span class="w">                                </span><span class="n">proj_data</span><span class="p">.</span><span class="n">projectile</span><span class="p">.</span><span class="n">owner_id</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span><span class="w">  </span><span class="c1">// Projectile destroyed, skip remaining enemies</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <h4 id="justification-optimalite-c121"><strong>Justification optimalité C12.1</strong></h4>
-<p><strong>Complexité :</strong></p>
-<pre><code>AABB per pair : O(1) constant time
+<p><strong>Complexité :</strong>
+<div class="highlight"><pre><span></span><code>AABB per pair : O(1) constant time
 4 comparaisons float = instant
-</code></pre>
+</code></pre></div></p>
 <p><strong>Vs alternatives moins bonnes :</strong></p>
 <table>
 <thead>
@@ -2266,8 +2266,8 @@ void CollisionSystem::check_player_projectiles_vs_enemies(
 </tr>
 </tbody>
 </table>
-<p><strong>Performance mesurée :</strong></p>
-<pre><code>Scenario : 50 projectiles × 50 ennemis = 2500 checks AABB/frame
+<p><strong>Performance mesurée :</strong>
+<div class="highlight"><pre><span></span><code>Scenario : 50 projectiles × 50 ennemis = 2500 checks AABB/frame
 
 Sans optimisations :
   Time : 2500 × 50ns = 125µs (OK 60 FPS)
@@ -2278,7 +2278,7 @@ Avec early exits (room, TTL, dead) :
 
 Sans AABB (brute force pixel-perfect) :
   Time : 2500 × 2000ns = 5ms (impossible 60 FPS)
-</code></pre>
+</code></pre></div></p>
 <p><strong>Résultat :</strong> AABB = 40x plus rapide que alternatives. C'est l'algo standard pour raison.</p>
 <hr />
 <h3 id="probleme-2-distribution-ponderee-ennemis-spawn">Problème 2 : Distribution pondérée ennemis spawn</h3>
@@ -2287,67 +2287,67 @@ Sans AABB (brute force pixel-perfect) :
 Sélectionner aléatoirement un item dans une liste, mais avec probabilités différentes pour chaque item. Algo standard gaming (loot drops, difficulty scaling).</p>
 <p><strong>Complexité :</strong> O(1) lookup</p>
 <h4 id="implementation-r-type_1"><strong>Implémentation R-Type</strong></h4>
-<pre><code class="language-cpp">/**
- * @brief Distribution pondérée enemies spawn
- * 
- * Problema : Random uniforme = trop de boss (boring)
- * Solution : Probabilités custom (70% basic, 20% advanced, 10% boss)
- * 
- * Algo : Uniform random [0-9] avec thresholds
- * Complexité : O(1)
- */
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * @brief Distribution pondérée enemies spawn</span>
+<span class="cm"> * </span>
+<span class="cm"> * Problema : Random uniforme = trop de boss (boring)</span>
+<span class="cm"> * Solution : Probabilités custom (70% basic, 20% advanced, 10% boss)</span>
+<span class="cm"> * </span>
+<span class="cm"> * Algo : Uniform random [0-9] avec thresholds</span>
+<span class="cm"> * Complexité : O(1)</span>
+<span class="cm"> */</span>
 
-enum class EnemyType {
-    BYDOS_BASIC,
-    BYDOS_ADVANCED,
-    BYDOS_BOSS
-};
+<span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">EnemyType</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">BYDOS_BASIC</span><span class="p">,</span>
+<span class="w">    </span><span class="n">BYDOS_ADVANCED</span><span class="p">,</span>
+<span class="w">    </span><span class="n">BYDOS_BOSS</span>
+<span class="p">};</span>
 
-EnemyType SpawnSystem::generate_random_enemy_type() const {
-    // Random 0-9
-    int type_value = std::uniform_int_distribution&lt;int&gt;(0, 9)(generator_);
+<span class="n">EnemyType</span><span class="w"> </span><span class="nf">SpawnSystem::generate_random_enemy_type</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Random 0-9</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">type_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">uniform_int_distribution</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">)(</span><span class="n">generator_</span><span class="p">);</span>
 
-    // Weighted distribution :
-    // 0-6 (7 values) = 70% BASIC
-    // 7-8 (2 values) = 20% ADVANCED
-    // 9   (1 value)  = 10% BOSS
+<span class="w">    </span><span class="c1">// Weighted distribution :</span>
+<span class="w">    </span><span class="c1">// 0-6 (7 values) = 70% BASIC</span>
+<span class="w">    </span><span class="c1">// 7-8 (2 values) = 20% ADVANCED</span>
+<span class="w">    </span><span class="c1">// 9   (1 value)  = 10% BOSS</span>
 
-    if (type_value &lt;= 6) {
-        return EnemyType::BYDOS_BASIC;      // 70%
-    } else if (type_value &lt;= 8) {
-        return EnemyType::BYDOS_ADVANCED;   // 20%
-    } else {
-        return EnemyType::BYDOS_BOSS;       // 10%
-    }
-}
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type_value</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EnemyType</span><span class="o">::</span><span class="n">BYDOS_BASIC</span><span class="p">;</span><span class="w">      </span><span class="c1">// 70%</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type_value</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EnemyType</span><span class="o">::</span><span class="n">BYDOS_ADVANCED</span><span class="p">;</span><span class="w">   </span><span class="c1">// 20%</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EnemyType</span><span class="o">::</span><span class="n">BYDOS_BOSS</span><span class="p">;</span><span class="w">       </span><span class="c1">// 10%</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 
-// Utilisation dans spawn wave
-void SpawnSystem::spawn_wave(uint32_t enemy_count) {
-    for (uint32_t i = 0; i &lt; enemy_count; ++i) {
-        EnemyType type = generate_random_enemy_type();
+<span class="c1">// Utilisation dans spawn wave</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">SpawnSystem::spawn_wave</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">enemy_count</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">enemy_count</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">EnemyType</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generate_random_enemy_type</span><span class="p">();</span>
 
-        // Spawn enemy based on type
-        switch(type) {
-            case EnemyType::BYDOS_BASIC:
-                spawn_enemy&lt;BydosBasic&gt;(get_spawn_position());
-                break;
-            case EnemyType::BYDOS_ADVANCED:
-                spawn_enemy&lt;BydosAdvanced&gt;(get_spawn_position());
-                break;
-            case EnemyType::BYDOS_BOSS:
-                spawn_enemy&lt;BydosBoss&gt;(get_spawn_position());
-                break;
-        }
-    }
-}
-</code></pre>
+<span class="w">        </span><span class="c1">// Spawn enemy based on type</span>
+<span class="w">        </span><span class="k">switch</span><span class="p">(</span><span class="n">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">EnemyType</span><span class="o">::</span><span class="no">BYDOS_BASIC</span><span class="p">:</span>
+<span class="w">                </span><span class="n">spawn_enemy</span><span class="o">&lt;</span><span class="n">BydosBasic</span><span class="o">&gt;</span><span class="p">(</span><span class="n">get_spawn_position</span><span class="p">());</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">EnemyType</span><span class="o">::</span><span class="no">BYDOS_ADVANCED</span><span class="p">:</span>
+<span class="w">                </span><span class="n">spawn_enemy</span><span class="o">&lt;</span><span class="n">BydosAdvanced</span><span class="o">&gt;</span><span class="p">(</span><span class="n">get_spawn_position</span><span class="p">());</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">EnemyType</span><span class="o">::</span><span class="no">BYDOS_BOSS</span><span class="p">:</span>
+<span class="w">                </span><span class="n">spawn_enemy</span><span class="o">&lt;</span><span class="n">BydosBoss</span><span class="o">&gt;</span><span class="p">(</span><span class="n">get_spawn_position</span><span class="p">());</span>
+<span class="w">                </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <h4 id="justification-optimalite-c121_1"><strong>Justification optimalité C12.1</strong></h4>
 <p><strong>Pourquoi c'est bon :</strong>
 - O(1) lookup (constant time)
 - Fair probability distribution
 - Utilisé partout (Minecraft, Diablo, WoW)</p>
-<p><strong>Impact gameplay :</strong></p>
-<pre><code>Sans pondération (uniforme) :
+<p><strong>Impact gameplay :</strong>
+<div class="highlight"><pre><span></span><code>Sans pondération (uniforme) :
 - 33% BASIC
 - 33% ADVANCED
 - 33% BOSS
@@ -2358,7 +2358,7 @@ Avec pondération (70-20-10) :
 - 20% ADVANCED (challenge)
 - 10% BOSS (rare, climax)
 → Difficulté progressive. Très bon.
-</code></pre>
+</code></pre></div></p>
 <hr />
 <h2 id="c122-implementation-dalgorithmes-originaux">C12.2 - IMPLÉMENTATION D'ALGORITHMES ORIGINAUX</h2>
 <h3 id="definition_1">Définition</h3>
@@ -2372,118 +2372,118 @@ Avec pondération (70-20-10) :
 <p><strong>C'est quoi le problème :</strong></p>
 <p>R-Type envoie positions à 20 Hz (50ms entre updates).
 Clients rendent à 60 FPS (16.67ms par frame).</p>
-<p>Sans interpolation :</p>
-<pre><code>Frame 1 (t=0ms)   : Draw position P1
+<p>Sans interpolation :
+<div class="highlight"><pre><span></span><code>Frame 1 (t=0ms)   : Draw position P1
 Frame 2 (t=17ms)  : Draw position P1 (attente packet)
 Frame 3 (t=33ms)  : Draw position P1 (attente packet)
 Frame 4 (t=50ms)  : Packet reçu ! Draw position P2
                     → SACCADE visible de P1 à P2
 
 Résultat : Mouvements saccadés, bad UX
-</code></pre>
+</code></pre></div></p>
 <p><strong>Pourquoi pas d'algo standard :</strong>
 - Pas de "standard UDP interpolation" (UDP = unreliable)
 - Chaque game résoud ça différemment
 - R-Type + architecture unique = solution custom</p>
 <p><strong>Notre solution originale : Linear Interpolation temporelle</strong></p>
 <h4 id="implementation-r-type_2"><strong>Implémentation R-Type</strong></h4>
-<pre><code class="language-cpp">/**
- * @brief Client-side position interpolation (réseau UDP 20Hz)
- * 
- * Problema : Serveur 20 Hz, client 60 FPS = saccades
- * 
- * Solution ORIGINALE : 
- * Entre packets, interpoler linéairement entre 
- * position précédente et position actuelle
- * 
- * alpha = (time_since_packet) / PACKET_INTERVAL
- * position = prev_pos + (curr_pos - prev_pos) * alpha
- */
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * @brief Client-side position interpolation (réseau UDP 20Hz)</span>
+<span class="cm"> * </span>
+<span class="cm"> * Problema : Serveur 20 Hz, client 60 FPS = saccades</span>
+<span class="cm"> * </span>
+<span class="cm"> * Solution ORIGINALE : </span>
+<span class="cm"> * Entre packets, interpoler linéairement entre </span>
+<span class="cm"> * position précédente et position actuelle</span>
+<span class="cm"> * </span>
+<span class="cm"> * alpha = (time_since_packet) / PACKET_INTERVAL</span>
+<span class="cm"> * position = prev_pos + (curr_pos - prev_pos) * alpha</span>
+<span class="cm"> */</span>
 
-class GamePlayState {
-private:
-    // Stocke positions entre packets
-    struct InterpolationData {
-        float prev_x, prev_y;           // Position reçue précédent packet
-        float current_x, current_y;     // Position reçue packet courant
-        float time_since_update = 0.0F; // Temps écoulé depuis dernier packet
-    };
+<span class="k">class</span><span class="w"> </span><span class="nc">GamePlayState</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="c1">// Stocke positions entre packets</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">InterpolationData</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">prev_x</span><span class="p">,</span><span class="w"> </span><span class="n">prev_y</span><span class="p">;</span><span class="w">           </span><span class="c1">// Position reçue précédent packet</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">current_x</span><span class="p">,</span><span class="w"> </span><span class="n">current_y</span><span class="p">;</span><span class="w">     </span><span class="c1">// Position reçue packet courant</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">time_since_update</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0F</span><span class="p">;</span><span class="w"> </span><span class="c1">// Temps écoulé depuis dernier packet</span>
+<span class="w">    </span><span class="p">};</span>
 
-    std::unordered_map&lt;uint32_t, InterpolationData&gt; interpolation_states_;
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="p">,</span><span class="w"> </span><span class="n">InterpolationData</span><span class="o">&gt;</span><span class="w"> </span><span class="n">interpolation_states_</span><span class="p">;</span>
 
-public:
-    /**
-     * Appelé chaque fois qu'un packet position est reçu du serveur
-     */
-    void on_server_position_update(uint32_t entity_id, float x, float y) {
-        auto&amp; interp = interpolation_states_[entity_id];
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Appelé chaque fois qu&#39;un packet position est reçu du serveur</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">on_server_position_update</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">entity_id</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">interp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interpolation_states_</span><span class="p">[</span><span class="n">entity_id</span><span class="p">];</span>
 
-        // Shift current → previous
-        interp.prev_x = interp.current_x;
-        interp.prev_y = interp.current_y;
+<span class="w">        </span><span class="c1">// Shift current → previous</span>
+<span class="w">        </span><span class="n">interp</span><span class="p">.</span><span class="n">prev_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interp</span><span class="p">.</span><span class="n">current_x</span><span class="p">;</span>
+<span class="w">        </span><span class="n">interp</span><span class="p">.</span><span class="n">prev_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interp</span><span class="p">.</span><span class="n">current_y</span><span class="p">;</span>
 
-        // New position devient current
-        interp.current_x = x;
-        interp.current_y = y;
+<span class="w">        </span><span class="c1">// New position devient current</span>
+<span class="w">        </span><span class="n">interp</span><span class="p">.</span><span class="n">current_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">        </span><span class="n">interp</span><span class="p">.</span><span class="n">current_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
 
-        // Reset timer
-        interp.time_since_update = 0.0F;
-    }
+<span class="w">        </span><span class="c1">// Reset timer</span>
+<span class="w">        </span><span class="n">interp</span><span class="p">.</span><span class="n">time_since_update</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0F</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    /**
-     * Appelé chaque frame (60 FPS)
-     * Retourne la position interpolée
-     */
-    void get_interpolated_position(
-        uint32_t entity_id,
-        float&amp; out_x, float&amp; out_y
-    ) {
-        auto it = interpolation_states_.find(entity_id);
-        if (it == interpolation_states_.end()) {
-            out_x = out_y = 0.0F;
-            return;
-        }
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Appelé chaque frame (60 FPS)</span>
+<span class="cm">     * Retourne la position interpolée</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">get_interpolated_position</span><span class="p">(</span>
+<span class="w">        </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">entity_id</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out_x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="n">out_y</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interpolation_states_</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">entity_id</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">interpolation_states_</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">out_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0F</span><span class="p">;</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
 
-        InterpolationData&amp; interp = it-&gt;second;
+<span class="w">        </span><span class="n">InterpolationData</span><span class="o">&amp;</span><span class="w"> </span><span class="n">interp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
 
-        // Increment time since last packet
-        // (appelé avec delta_time depuis update loop)
+<span class="w">        </span><span class="c1">// Increment time since last packet</span>
+<span class="w">        </span><span class="c1">// (appelé avec delta_time depuis update loop)</span>
 
-        // Calculate interpolation factor (0.0 à 1.0)
-        // PACKET_INTERVAL = 50ms (20 Hz)
-        static constexpr float PACKET_INTERVAL = 0.050F;  // 50ms
-        float alpha = std::min(1.0F, 
-            interp.time_since_update / PACKET_INTERVAL);
+<span class="w">        </span><span class="c1">// Calculate interpolation factor (0.0 à 1.0)</span>
+<span class="w">        </span><span class="c1">// PACKET_INTERVAL = 50ms (20 Hz)</span>
+<span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">PACKET_INTERVAL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.050F</span><span class="p">;</span><span class="w">  </span><span class="c1">// 50ms</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="mf">1.0F</span><span class="p">,</span><span class="w"> </span>
+<span class="w">            </span><span class="n">interp</span><span class="p">.</span><span class="n">time_since_update</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">PACKET_INTERVAL</span><span class="p">);</span>
 
-        // Linear interpolation
-        out_x = interp.prev_x + (interp.current_x - interp.prev_x) * alpha;
-        out_y = interp.prev_y + (interp.current_y - interp.prev_y) * alpha;
-    }
+<span class="w">        </span><span class="c1">// Linear interpolation</span>
+<span class="w">        </span><span class="n">out_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interp</span><span class="p">.</span><span class="n">prev_x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">interp</span><span class="p">.</span><span class="n">current_x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">interp</span><span class="p">.</span><span class="n">prev_x</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">alpha</span><span class="p">;</span>
+<span class="w">        </span><span class="n">out_y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interp</span><span class="p">.</span><span class="n">prev_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">interp</span><span class="p">.</span><span class="n">current_y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">interp</span><span class="p">.</span><span class="n">prev_y</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">alpha</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    /**
-     * Appelé à chaque update game loop
-     */
-    void update(float delta_time) {
-        // Update tous les timers interpolation
-        for (auto&amp; [entity_id, interp] : interpolation_states_) {
-            interp.time_since_update += delta_time;
-        }
-    }
-};
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Appelé à chaque update game loop</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">update</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">delta_time</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Update tous les timers interpolation</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="p">[</span><span class="n">entity_id</span><span class="p">,</span><span class="w"> </span><span class="n">interp</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">interpolation_states_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">interp</span><span class="p">.</span><span class="n">time_since_update</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">delta_time</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
 
-// Utilisation dans render loop :
-void GamePlayState::render_entities() {
-    for (const auto&amp; [entity_id, entity] : entities_) {
-        float render_x, render_y;
-        get_interpolated_position(entity_id, render_x, render_y);
+<span class="c1">// Utilisation dans render loop :</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">GamePlayState::render_entities</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="p">[</span><span class="n">entity_id</span><span class="p">,</span><span class="w"> </span><span class="n">entity</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">entities_</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">render_x</span><span class="p">,</span><span class="w"> </span><span class="n">render_y</span><span class="p">;</span>
+<span class="w">        </span><span class="n">get_interpolated_position</span><span class="p">(</span><span class="n">entity_id</span><span class="p">,</span><span class="w"> </span><span class="n">render_x</span><span class="p">,</span><span class="w"> </span><span class="n">render_y</span><span class="p">);</span>
 
-        // Render entity à position interpolée
-        draw_sprite(entity.sprite, render_x, render_y);
-    }
-}
-</code></pre>
+<span class="w">        </span><span class="c1">// Render entity à position interpolée</span>
+<span class="w">        </span><span class="n">draw_sprite</span><span class="p">(</span><span class="n">entity</span><span class="p">.</span><span class="n">sprite</span><span class="p">,</span><span class="w"> </span><span class="n">render_x</span><span class="p">,</span><span class="w"> </span><span class="n">render_y</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <h4 id="exemple-visuel-fonctionnement"><strong>Exemple visuel fonctionnement</strong></h4>
-<pre><code>TIMELINE (packet toutes les 50ms, render toutes les 16.67ms) :
+<div class="highlight"><pre><span></span><code>TIMELINE (packet toutes les 50ms, render toutes les 16.67ms) :
 
 t=0ms   [PACKET 1 : pos=100]
         → interp.prev_x = 100, interp.current_x = 100
@@ -2512,7 +2512,7 @@ t=100ms [PACKET 3 : pos=200]
         → interp.prev_x = 150, interp.current_x = 200
 
 RÉSULTAT : Smooth transition 100→150→200 au lieu de saccade
-</code></pre>
+</code></pre></div>
 <h4 id="justification-originalite-c122"><strong>Justification originalité C12.2</strong></h4>
 <p><strong>Pourquoi c'est original :</strong></p>
 <p>❌ <strong>Pas d'algo standard pour "interpolation UDP 20Hz → 60FPS rendering"</strong>
@@ -2525,8 +2525,8 @@ RÉSULTAT : Smooth transition 100→150→200 au lieu de saccade
 - Calcule alpha basé temps écoulé
 - Lerp entre deux points
 - Invisible pour joueur (smooth motion)</p>
-<p>✅ <strong>Alternatives existantes (rejected) :</strong></p>
-<pre><code>1. Server-side interpolation
+<p>✅ <strong>Alternatives existantes (rejected) :</strong>
+<div class="highlight"><pre><span></span><code>1. Server-side interpolation
    Problema : Serveur ne sait pas quand client render
    Rejected ❌
 
@@ -2541,9 +2541,9 @@ RÉSULTAT : Smooth transition 100→150→200 au lieu de saccade
 4. Notre solution : Client interpolation
    Avantage : Simple, zero lag perceptual, scalable
    Retenu ✅
-</code></pre>
+</code></pre></div></p>
 <h4 id="performance-interpolation"><strong>Performance interpolation</strong></h4>
-<pre><code>Complexité : O(1) per entity per frame
+<div class="highlight"><pre><span></span><code>Complexité : O(1) per entity per frame
 - 1 addition
 - 1 subtraction
 - 1 multiplication
@@ -2556,7 +2556,7 @@ Impact perceptual :
 - Avec : Mouvement fluide 60 FPS constant
 
 Résultat : +++ gameplay quality, zero overhead
-</code></pre>
+</code></pre></div>
 <hr />
 <h2 id="synthese-c12-algos-et-solutions">SYNTHÈSE C12 : Algos et Solutions</h2>
 <table>
@@ -2615,13 +2615,13 @@ Créer des solutions ad-hoc pour problèmes qui n'ont pas d'algo standard exista
 <p>Problème : Détecter collisions projectiles/ennemis en temps réel.</p>
 <p>Solution : AABB (Axis-Aligned Bounding Box) - référence "Real-Time Collision Detection" Christer Ericson 2004.</p>
 <p>Concept : Chaque sprite a une boîte rectangulaire invisible. Collision = chevauchement sur X ET Y.</p>
-<p>Implémentation :</p>
-<pre><code class="language-cpp">bool checkAABB(float x1, float y1, float w1, float h1,
-               float x2, float y2, float w2, float h2) const {
-    return x1 &lt; x2 + w2 &amp;&amp; x1 + w1 &gt; x2 &amp;&amp;
-           y1 &lt; y2 + h2 &amp;&amp; y1 + h1 &gt; y2;
-}
-</code></pre>
+<p>Implémentation :
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">checkAABB</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">w1</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">h1</span><span class="p">,</span>
+<span class="w">               </span><span class="kt">float</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">w2</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">h2</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">x1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">           </span><span class="n">y1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">y2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">y1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">y2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
 <p>Complexité : O(1) par paire testée (4 comparaisons).</p>
 <p>Performance mesurée : 50ns/check vs 2000ns pixel-perfect → 40x plus rapide.</p>
 <p>Avec 50 projectiles × 50 ennemis = 2500 checks = 125µs (safe 60 FPS).</p>
@@ -2633,15 +2633,15 @@ Créer des solutions ad-hoc pour problèmes qui n'ont pas d'algo standard exista
 <h4 id="algo-2-weighted-random-distribution"><strong>Algo 2 : Weighted Random Distribution</strong></h4>
 <p>Problème : Spawn ennemis avec probabilités différentes (70% basic, 20% advanced, 10% boss).</p>
 <p>Solution : Weighted random selection - algo standard gaming (Minecraft, Diablo).</p>
-<p>Implémentation :</p>
-<pre><code class="language-cpp">EnemyType generate_random_enemy_type() {
-    int type = random(0, 9);  // 0-9 (10 valeurs)
+<p>Implémentation :
+<div class="highlight"><pre><span></span><code><span class="n">EnemyType</span><span class="w"> </span><span class="nf">generate_random_enemy_type</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">random</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">);</span><span class="w">  </span><span class="c1">// 0-9 (10 valeurs)</span>
 
-    if (type &lt;= 6) return BASIC;      // 7/10 = 70%
-    if (type &lt;= 8) return ADVANCED;   // 2/10 = 20%
-    return BOSS;                       // 1/10 = 10%
-}
-</code></pre>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">BASIC</span><span class="p">;</span><span class="w">      </span><span class="c1">// 7/10 = 70%</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">ADVANCED</span><span class="p">;</span><span class="w">   </span><span class="c1">// 2/10 = 20%</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">BOSS</span><span class="p">;</span><span class="w">                       </span><span class="c1">// 1/10 = 10%</span>
+<span class="p">}</span>
+</code></pre></div></p>
 <p>Complexité : O(1) lookup.</p>
 <p>Impact gameplay : Distribution réaliste (peu de boss) vs uniforme (trop de boss).</p>
 <hr />
