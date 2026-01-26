@@ -37,7 +37,11 @@ L’organisation des vues repose sur une hiérarchie visuelle claire, mettant en
 
 La conception des interfaces s’appuie sur les *Game Accessibility Guidelines* pour le web et le mobile, afin de garantir une expérience accessible et inclusive.
 
-(cf. photo avec exemple)
+<div align="center" style="margin: 2em 0;">
+    <img src="../../../../assets/images/c20-apparence.png" alt="Accessibilité exemple large 1" style="width:60%; height:100px; object-fit:cover; margin: 0.5em; display:inline-block;" />
+    <img src="../../../../assets/images/c20-language.png" alt="Accessibilité exemple large 2" style="width:60%; height:100px; object-fit:cover; margin: 0.5em; display:inline-block;" />
+    <img src="../../../../assets/images/c20-mobile_language.jpg" alt="Accessibilité exemple carré" style="width:100px; height:110px; object-fit:cover; margin: 0.5em; display:inline-block;" />
+</div>
 
 En s’inspirant de ces recommandations, nous avons ajouté plusieurs fonctionnalités concrètes pour améliorer l’accessibilité de l’application :  
 - un mode clair et un mode sombre pour s’adapter aux préférences visuelles des utilisateurs,  
