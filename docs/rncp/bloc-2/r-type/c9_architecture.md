@@ -1,348 +1,260 @@
-# Architecture Logicielle & Patterns ECS
+# 🎮 Architecture et Intégration Technique
 
-## Choix d'Architecture
+## 🏗️ Architecture Client/Serveur + ECS
 
-### Architecture Client/Serveur + ECS
+### Pourquoi ECS ?
 
-#### Justification du pattern ECS
+✅ "Avantages de l'architecture ECS"
+  
+    === "Découplage"
+      **Séparation complète données/logique**
+      
+      Découplage complet entre données (Composants) et logique (Systèmes) permettant une meilleure gestion des modifications et une plus grande flexibilité dans le développement.
 
-| Avantage | Bénéfice |
-|----------|----------|
-| 🔀 **Découplage** | Données (Composants) ≠ Logique (Systèmes) |
-| 📦 **Extensibilité** | Nouvelle feature = Système + Composants |
-| ⚡ **Performance** | Data-oriented design, cache-friendly |
-| 🧪 **Testabilité** | Chaque système indépendant et isolable |
+    === "Extensibilité"
+      **Ajout facilité de fonctionnalités**
+      
+      Ajouter une feature = créer un Système + des Composants. Cette approche facilite l'ajout de nouvelles fonctionnalités sans perturber le code existant.
 
-#### Schéma Architectural
+    === "Performance"
+      **Optimisation du cache**
+      
+      Data-oriented design, cache-friendly. L'architecture ECS optimise l'accès aux données, ce qui améliore les performances globales.
 
-```
-┌──────────────────────────────────────────────────┐
-│          CLIENT (Rendu & Entrées)                │
-│  InputManager ←→ UDP ←→ Renderer                 │
-└──────────────────────────────────────────────────┘
-           ↕ Synchronisation
-┌──────────────────────────────────────────────────┐
-│    SERVER (Autorité Logique - ECS Engine)        │
-│                                                  │
-│  UDP Protocol ←→ Game Loop ←→ ECS Engine         │
-│                              ├─ SystemManager    │
-│                              ├─ EntityManager    │
-│                              └─ ComponentManager │
-└──────────────────────────────────────────────────┘
-```
+    === "Testabilité"
+      **Tests isolés**
+      
+      Chaque système indépendant peut être testé individuellement, ce qui simplifie le processus de débogage.
 
 ---
 
-## Pipeline Moteur
+### Structure Logique
 
-### `Engine::update()` – Cœur du Système
+```mermaid
+graph TB
+  subgraph CLIENT["🖥️ CLIENT (Rendu)"]
+    IM[InputManager]
+    UDP1[UDP]
+    REN[Renderer]
+    IM <--> UDP1
+    UDP1 <--> REN
+  end
+  
+  subgraph SERVER["⚙️ SERVER (Autorité Logique)"]
+    UDP2[UDP Protocol]
+    GL[Game Loop]
+    ECS[ECS Engine]
+    SM[SystemManager]
+    EM[EntityManager]
+    CM[ComponentManager]
+    
+    UDP2 <--> GL
+    GL <--> ECS
+    ECS --> SM
+    ECS --> EM
+    ECS --> CM
+  end
+  
+  CLIENT <--> SERVER
+  
+  style CLIENT fill:#667eea,color:#fff
+  style SERVER fill:#764ba2,color:#fff
+```
 
-**Séquence d'exécution garantie:**
+ℹ️ "Architecture"
+  Cette structure illustre comment le client et le serveur interagissent via un protocole UDP, avec une séparation claire des responsabilités entre le rendu et la logique du jeu.
 
-```cpp
+---
+
+## ⚙️ Pipeline Moteur & Systèmes
+
+### Engine::update() – Le cœur du système
+
+```cpp title="engine/core/Engine.cpp"
 void Engine::update() {
   if (!initialized_) return;
   
-  // 1️⃣ Mise à jour du timing
   time_manager_.update();
   float delta_time = time_manager_.get_delta_time();
-  
-  // 2️⃣ Exécution de tous les systèmes (ordre déterministe)
   system_manager_.update_all_systems(delta_time);
-  
-  // 3️⃣ Cleanup automatique des entités marquées
 }
 ```
 
-#### Ordre d'Exécution des Systèmes
+🗒️ "Fonction essentielle"
+  Cette fonction gère le timing et la mise à jour de tous les systèmes à chaque itération du moteur.
+
+### Ordre d'exécution des systèmes
 
 ```mermaid
-graph LR
-  A["1. InputSystem"] → B["2. MovementSystem"]
-  B → C["3. EnemyAISystem"]
-  C → D["4. PhysicsSystem"]
-  D → E["5. NetworkSyncSystem"]
-  E → F["6. RenderSystem<br/>(Client Only)"]
+sequenceDiagram
+  participant Engine
+  participant InputSystem
+  participant MovementSystem
+  participant EnemyAISystem
+  participant PhysicsSystem
+  participant NetworkSyncSystem
+  participant RenderSystem
+  
+  Engine->>InputSystem: update()
+  Engine->>MovementSystem: update()
+  Engine->>EnemyAISystem: update()
+  Engine->>PhysicsSystem: update()
+  Engine->>NetworkSyncSystem: update()
+  Engine->>RenderSystem: update()
 ```
 
 ---
 
-## Pattern ECS - Implémentation
+## 🎯 Architecture Technique
 
-### Template System<ComponentTypes...>
+### Pattern ECS – Template System<ComponentTypes...>
 
-```cpp
+```cpp title="engine/core/System.hpp"
 template <typename... ComponentTypes>
 class System : public ISystem {
  public:
   void update(float dt) override {
   for (EntityId e : entity_manager_->get_entities())
     if (has_required_components(e))
-    update_entity(e, dt);  // Traite seulement les entités valides
+    update_entity(e, dt);
   }
 };
 ```
 
-#### Exemple Concret – `PlayerMovementSystem`
+👍 "Fonctionnement"
+  Ce modèle permet de définir des systèmes qui traitent uniquement les entités possédant les composants requis, assurant une gestion efficace et type-safe.
 
-Cet exemple illustre comment un système filtre et traite les entités:
+### Exemple concret – PlayerMovementSystem
 
-```cpp
+```cpp title="game/systems/PlayerMovementSystem.hpp"
 class PlayerMovementSystem : public System<Transform, Velocity, PlayerInput, MovementStats> {
   void update_entity(EntityId e, float dt) override {
-  // Récupère les composants requis
-  auto* transform = get_component<Transform>(e);
   auto* velocity = get_component<Velocity>(e);
-  auto* input = get_component<PlayerInput>(e);
-  
-  // Applique la physique
-  velocity->x = input->x * movement_speed_;
-  transform->x += velocity->x * dt;
-  
-  // Clamp aux limites
-  transform->x = std::clamp(transform->x, 0.f, screen_width_);
+  velocity->x += input_.direction_x * dt;
+  velocity->y = std::min(velocity->y, max_speed_);
   }
 };
 ```
 
-------
+**Composants requis :** Transform | Velocity | PlayerInput | MovementStats
 
-## Intégration Technique
+---
 
-### Gestion du Lifecycle & Injection de Dépendances
+### Injection de Dépendances – SystemManager
 
-**Approche Service Locator léger via SystemManager:**
-
-```cpp
+```cpp title="engine/core/SystemManager.hpp"
 template <typename T, typename... Args>
 T* SystemManager::register_system(Args&&... args) {
-  auto system = std::make_unique<T>(std::forward<Args>(args)...);
-  
-  // Injection des dépendances
+  auto system = std::make_unique<T>(...);
   system->set_component_manager(&component_manager_);
   system->set_entity_manager(&entity_manager_);
-  
-  // Hook d'initialisation
   system->initialize();
-  
   systems_.push_back(std::move(system));
   return system.get();
 }
 ```
 
-#### Avantages de cette Approche
-
-✅ **Couplage Minimal** – Systèmes ne dépendent que des interfaces  
-✅ **Extensibilité** – Pas de dépendance croisée entre systèmes  
-✅ **Lifecycle Garanti** – Séquence init → update → shutdown maîtrisée  
+| Avantage | Description |
+|----------|-------------|
+| **Interfaces uniquement** | Les systèmes ne dépendent que des abstractions |
+| **Pas de couplage croisé** | Chaque système évolue indépendamment |
+| **Lifecycle garanti** | `init → update → shutdown` |
 
 ---
 
-### Registry Composants – Allocation Automatique des Type IDs
+### Registry Composants – Allocation Auto
 
-```cpp
+```cpp title="engine/core/ComponentRegistry.hpp"
 template <typename T>
 class ComponentTypeRegistry {
  public:
   static ComponentTypeId get_type_id() {
-  // 🔐 Thread-safe : variable locale statique
   static ComponentTypeId type_id = allocate_component_type_id();
   return type_id;
   }
 };
-
-inline ComponentTypeId allocate_component_type_id() {
-  static ComponentTypeId next_id = 0;
-  return ++next_id;  // Incrémentation atomique
-}
 ```
 
-#### Bénéfice : Extensibilité Zéro-Couplage
-
-| Action | Impact |
-|--------|--------|
-| Créer une classe composant | Type ID généré automatiquement |
-| Modifier le code core ECS | ❌ Pas nécessaire |
-| IDs uniques et déterministes | ✅ Garanti |
+✅ "Bénéfice : Extensibilité zéro-coupling"
+  
+  ✅ **Ajouter un composant = créer une classe**  
+  ✅ **Pas de modification du core ECS**  
+  ✅ **IDs générés automatiquement et uniques**
 
 ---
 
-## Intégration Serveur
+## 📁 Organisation & Modularité
 
-### Initialisation du Serveur de Jeu
-
-```cpp
-GameServer::GameServer(Asamio::IoContext& io, uint16_t port)
-  : socket_(io, UdpEndpoint(UdpProtocol::v4(), port)) {
-  
-  engine_.initialize();
-  
-  // Enregistrement des systèmes
-  movement_system_ = engine_.register_system<MovementSystem>();
-  enemy_ai_system_ = engine_.register_system<EnemyAISystem>();
-  physics_system_ = engine_.register_system<PhysicsSystem>();
-  network_system_ = engine_.register_system<NetworkSyncSystem>();
-  
-  startGameLoop();  // Boucle asynchrone UDP
-}
-```
-
-#### Flux de Traitement Réseau
-
-```
-UDP Packet Reçu
-    ↓
-Validation Headers
-    ↓
-Parsing Payload
-    ↓
-Dispatch → Systèmes (Input, Spawn, etc.)
-    ↓
-Broadcast State Updates → Clients
-```
-
----
-
-## Organisation Modulaire
-
-### Structure des Dossiers par Domaine
-
-```
+```plaintext title="Structure du projet"
 src/
-├── engine/                    ← Infrastructure ECS (zéro dépendance)
-│   ├── core/
-│   │   ├── Engine.h/cpp
-│   │   ├── System.h
-│   │   ├── Entity.h
-│   │   └── ComponentManager.h
-│   └── registry/
-│       └── ComponentTypeRegistry.h
-│
-├── game/                      ← Logique applicative
-│   ├── components/
-│   │   ├── Transform.h
-│   │   ├── Velocity.h
-│   │   ├── Enemy.h
-│   │   └── Health.h
-│   └── systems/
-│       ├── MovementSystem.h
-│       ├── EnemyAISystem.h
-│       └── ProjectileSystem.h
-│
-├── client/                    ← Rendu + Entrées utilisateur
-│   ├── Graphics/
-│   │   ├── Renderer.h
-│   │   └── InputManager.h
-│   └── main.cpp
-│
-├── server/                    ← Réseau autoritaire
-│   ├── GameServer.h/cpp
-│   ├── Protocol.h
-│   └── RoomManager.h
-│
-└── common/                    ← Partagé client/server
-  ├── Constants.h
-  └── NetworkProtocol.h
+├── engine/         ← Core ECS
+│   └── core/       Engine, System, Component, Entity
+├── game/           ← Domaine applicatif
+│   ├── components/ Enemy, Player, Health
+│   └── systems/    EnemyAI, Movement, Projectile
+├── client/         ← Rendu + Input
+├── server/         ← Réseau autoritaire
+└── common/         ← Partagé client/server
 ```
 
-#### Dépendances Unidirectionnelles
+**Dépendances unidirectionnelles :**
 
 ```mermaid
-graph BT
-  Engine["🔧 engine/"]
-  Game["🎮 game/"]
-  Client["👁️ client/"]
-  Server["🖥️ server/"]
-  
-  Game -->|dépend de| Engine
-  Client -->|dépend de| Game
-  Client -->|dépend de| Engine
-  Server -->|dépend de| Game
-  Server -->|dépend de| Engine
-  
-  style Engine fill:#e1f5ff
-  style Game fill:#f3e5f5
-  style Client fill:#fff3e0
-  style Server fill:#e8f5e9
+  graph LR
+    E["engine/"]
+    G["game/"]
+    C["client/"]
+    S["server/"]
+    
+    G --> E
+    C --> E
+    C --> G
+    S --> E
+    S --> G
+    
+    style E fill:#667eea,color:#fff
+    style G fill:#764ba2,color:#fff
+    style C fill:#48bb78,color:#fff
+    style S fill:#ed8936,color:#fff
 ```
 
 ---
 
-## Pérennité & Extensibilité
+## 🚀 Extensibilité – Ajouter une Feature
 
-### Ajout d'une Nouvelle Feature : Système de Shield
+➡️ "Scénario : Système de Shield"
 
-**Scenario complet (zéro modification du code existant):**
+  **Étape 1 : Composants**
+  ```cpp
+  struct Shield { float health; float recharge_rate; };
+  ```
 
-#### Étape 1 : Créer les Composants
+  **Étape 2 : Système**
+  ```cpp
+  class ShieldSystem : public System<Shield, Health> {
+    void update_entity(EntityId e, float dt) override {
+    auto* shield = get_component<Shield>(e);
+    shield->health += shield->recharge_rate * dt;
+    }
+  };
+  ```
 
-```cpp
-// components/Shield.h
-struct Shield {
-  float health = 100.f;
-  float max_health = 100.f;
-  float recharge_rate = 25.f;  // par seconde
-};
+  **Étape 3 : Enregistrement**
+  ```cpp
+  engine_.register_system<ShieldSystem>();
+  ```
 
-struct ShieldRenderer {
-  uint32_t shader_id;
-  glm::vec3 color;
-};
-```
-
-#### Étape 2 : Implémenter le Système
-
-```cpp
-// systems/ShieldSystem.h
-class ShieldSystem : public System<Shield, Health> {
- private:
-  NetworkSyncSystem* network_sync_;
-  
- public:
-  void initialize() override {
-  network_sync_ = get_system<NetworkSyncSystem>();
-  }
-  
-  void update_entity(EntityId e, float dt) override {
-  auto* shield = get_component<Shield>(e);
-  
-  // Recharge progressive
-  shield->health = std::min(
-    shield->health + shield->recharge_rate * dt,
-    shield->max_health
-  );
-  
-  // Sync serveur → clients
-  if (network_sync_)
-    network_sync_->mark_entity_dirty(e);
-  }
-};
-```
-
-#### Étape 3 : Enregistrer dans l'Engine
-
-```cpp
-// main.cpp ou GameServer.cpp
-engine_.register_system<ShieldSystem>();
-```
-
-#### Résultat
-
-| Métrique | Avant | Après |
-|----------|-------|-------|
-| Lignes modifiées dans engine/ | 0 | 0 |
-| Lignes modifiées dans game/ | 0 | 0 |
-| Couplage croisé | ❌ | ❌ |
-| Testabilité du nouveau code | ✅ | ✅ |
+"✅ Zéro modification du code existant !"
+  L'architecture ECS permet une extensibilité optimale sans toucher au cœur du système.
 
 ---
 
-## 📊 Résumé des Patterns
+## 📊 Patterns Utilisés
 
-| Pattern | Usage | Bénéfice |
-|---------|-------|----------|
-| **ECS** | Séparation données/logique | Maintenabilité, Performance |
-| **Service Locator** | Injection de dépendances | Couplage minimal |
-| **Template Registry** | Allocation automatique IDs | Extensibilité |
-| **Unidirectional Dependencies** | Architecture modulaire | Testabilité, Isolabilité |
-
+| Pattern | Utilisation | Bénéfice |
+|---------|-------------|----------|
+| **ECS** | Architecture globale | Découplage, performance |
+| **Template Metaprogramming** | System<Components...> | Type-safety |
+| **Service Locator** | SystemManager | Injection de dépendances |
+| **Registry** | ComponentTypeId | Extensibilité sans couplage |
+| **RAII** | Lifecycle management | Gestion automatique |

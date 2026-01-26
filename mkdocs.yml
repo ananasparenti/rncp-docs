@@ -1,8 +1,18 @@
 site_name: Documentation RNCP – ASMAP
 
+plugins:
+    - search
+
+markdown_extensions:
+    - pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_code_format
+
 theme:
-  name: material
-  language: fr
+    name: material
+    language: fr
 
 nav:
   - Accueil: index.md

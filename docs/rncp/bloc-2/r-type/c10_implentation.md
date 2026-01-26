@@ -1,14 +1,16 @@
-## 🔎 Observable 1 :  Implémentation de l’architecture
+# 📚 Documentation RNCP: Implémentation de l’Architecture
 
-### Clean Code & RAII
+## 🔎 Architecture Clean Code & RAII
 
-**Engine = Modèle RAII:**
+### Modèle RAII de l'Engine
+Le modèle RAII (Resource Acquisition Is Initialization) garantit que les ressources sont correctement libérées lorsque l'objet sort de portée. Dans cette classe `Engine`, la copie et l'assignation sont désactivées pour éviter des comportements indésirables, et le destructeur assure un nettoyage automatique.
+
 ```cpp
 class Engine {
  public:
-  Engine(const Engine&) = delete;           // Pas de copie
-  Engine& operator=(const Engine&) = delete;
-  ~Engine() { shutdown(); }                 // Cleanup auto
+  Engine(const Engine&) = delete;            // Pas de copie
+  Engine& operator=(const Engine&) = delete; // Pas d'assignation
+  ~Engine() { shutdown(); }                  // Cleanup automatique
   
   bool initialize();
   void shutdown();
@@ -16,63 +18,56 @@ class Engine {
 };
 ```
 
-**Bénéfices:**
-- ✅ Pas de fuite mémoire (destructeur garanti)
-- ✅ Pas de double-free
-- ✅ Lifecycle explicite et prévisible
+### Bénéfices de RAII
+- ✅ **Pas de fuite mémoire** : Destructeur garanti
+- ✅ **Pas de double-free** : Gestion sécurisée de la mémoire
+- ✅ **Lifecycle explicite** : Prévisibilité des opérations
 
 ---
 
-## 🔎 Observable 1 : Exemple: Mouvement Joueur
+## 🔎 Exemples de Systèmes
 
-### PlayerMovementSystem – La vraie complexité
+### Système de Mouvement du Joueur
+Ce système gère le mouvement du joueur en récupérant les composants nécessaires et en appliquant des transformations basées sur l'entrée du joueur. Il inclut également un lissage de l'entrée pour éviter les mouvements saccadés.
 
 ```cpp
 void PlayerMovementSystem::update_entity(EntityId e, float dt) {
-  // 1️⃣ Récupère les composants
+  // 1️⃣ Récupération des composants
   auto* tr = get_component<Transform>(e);
   auto* vel = get_component<Velocity>(e);
   auto* in  = get_component<PlayerInput>(e);
   auto* mv  = get_component<MovementStats>(e);
   if (!tr || !vel || !in || !mv) return;
   
-  // 2️⃣ Smoothing input (anti-jitter)
+  // 2️⃣ Lissage de l'input (anti-jitter)
   in->update_smooth_input(dt);
   
-  // 3️⃣ Accélération / Décélération
+  // 3️⃣ Accélération et Décélération
   float target_vx = in->input_x * mv->max_speed;
   vel->vx = move_towards(vel->vx, target_vx, mv->acceleration * dt);
   
-  // 4️⃣ Physique
+  // 4️⃣ Mise à jour de la position
   tr->x += vel->vx * dt;
   
-  // 5️⃣ Clamp écran
+  // 5️⃣ Application des contraintes de bord
   apply_boundary_constraints(tr, vel);
 }
 ```
 
-**Concepts:**
-- Composition (Transform + Velocity + Input + Stats)
-- Interpolation physique (smooth acceleration)
-- Synchronisation réseau optionnelle
-
----
-
-## 🔎 Observable 1 : Exemple: IA Ennemis
-
-### EnemyAISystem – Strategy Pattern
+### Système d'IA des Ennemis
+Ce système permet aux ennemis de détecter le joueur et de se déplacer vers lui tout en évitant le chevauchement avec d'autres ennemis. Il gère également le tir en fonction d'un cooldown.
 
 ```cpp
 auto nearest = find_nearest_player(entity, transform);
 if (nearest && distance <= config_.detection_range) {
-  // Calcule offset formation (évite stacking)
+  // Calcul de l'offset de formation (évite le stacking)
   float angle = fmod(entity * 37.0F, 360.0F) * PI/180.0F;
   Transform target{
     player->x + cos(angle) * config_.formation_radius,
     player->y + sin(angle) * config_.formation_radius
   };
   
-  // Poursuit la cible
+  // Poursuite de la cible
   move_towards_target(velocity, transform, &target, enemy->current_speed);
 }
 
@@ -83,50 +78,52 @@ if (shoot_timers_[entity] <= 0.0f && shoot_callback_) {
 }
 ```
 
-**Comportements (Strategy):**
-- 🟢 PASSIVE: se déplace selon pattern
-- 🔴 AGGRESSIVE: chasse + tir
-- 🛡️ DEFENSIVE: fuit si joueur trop proche
-- 🎯 HUNTING: poursuit jusqu'à destruction
+### Comportements de l'IA (Pattern Strategy)
+Les comportements des ennemis sont définis par un pattern de stratégie, permettant une flexibilité dans leur comportement en fonction de la situation.
+
+- 🟢 **PASSIF** : Se déplace selon un pattern
+- 🔴 **AGRESSIF** : Chasse et tire
+- 🛡️ **DÉFENSIF** : Fuit si le joueur est trop proche
+- 🎯 **CHASSE** : Poursuit jusqu'à destruction
 
 ---
 
-## 🔎 Observable 2 : Design Patterns
+## 🔎 Design Patterns et Réseau Asynchrone
 
-### Registry, Service Locator, Strategy
+### Utilisation des Design Patterns
+Les design patterns sont utilisés pour structurer le code de manière efficace, facilitant la gestion des composants et des comportements.
 
-| Pattern | Usage | Fichier |
-|---------|-------|---------|
-| **Registry** | Auto-allocation TypeID composants | `Component.hpp` |
-| **Service Locator** | Injection managers (Component/Entity) | `System.hpp` |
-| **Strategy** | Comportements IA (Aggressive/Defensive) | `EnemyAISystem.cpp` |
-| **Observer** | Network sync déclenché par timer | `PlayerMovementSystem.cpp` |
-| **Factory** | Création entités via `Engine::create_entity()` | `Engine.hpp` |
+| **Pattern** | **Usage** | **Fichier** |
+|-------------|-----------|--------------|
+| **Registry** | Auto-allocation des TypeID des composants | `Component.hpp` |
+| **Service Locator** | Injection des managers (Component/Entity) | `System.hpp` |
+| **Strategy** | Comportements IA (Agressif/Défensif) | `EnemyAISystem.cpp` |
+| **Observer** | Synchronisation réseau déclenchée par timer | `PlayerMovementSystem.cpp` |
+| **Factory** | Création d'entités via `Engine::create_entity()` | `Engine.hpp` |
 
----
-
-## 🔎 Observable 2 : Réseau Asynchrone
-
-### UDP Async + Validation
+### UDP Asynchrone et Validation
+Ce code gère la réception asynchrone de paquets UDP, en vérifiant les erreurs et en analysant les données reçues pour dispatcher les handlers appropriés.
 
 ```cpp
 socket_.async_receive_from(buf, sender, 
   [this](error_code ec, size_t n) {
-    // 1️⃣ Vérifie pas d'erreur et taille min
+    // 1️⃣ Vérification d'erreur et taille minimale
     if (!ec && n >= sizeof(PacketHeader)) {
-      // 2️⃣ Parse header + payload
+      // 2️⃣ Analyse de l'en-tête et du payload
       if (protocol_.parsePacket(buf.data(), n, header, payload, err)) {
-        // 3️⃣ Dispatch handler (HELLO/INPUT/etc.)
+        // 3️⃣ Dispatch du handler (HELLO/INPUT/etc.)
         handlePacket(header, payload, sender);
       }
     }
-    // 4️⃣ Réarme la boucle (rearm pattern)
+    // 4️⃣ Réarmement de la boucle (pattern de réarmement)
     receivePackets();
   }
 );
 ```
 
-**Qualité:**
-- ✅ Validation stricte payloads
-- ✅ Pas de blocking (async)
-- ✅ Rearm automatique (pas d'oubli)
+### Qualité du Réseau
+Les caractéristiques de qualité du réseau garantissent une communication efficace et fiable entre les clients et le serveur.
+
+- ✅ **Validation stricte** des payloads
+- ✅ **Pas de blocage** : Traitement asynchrone
+- ✅ **Réarmement automatique** : Pas d'oubli dans le traitement
