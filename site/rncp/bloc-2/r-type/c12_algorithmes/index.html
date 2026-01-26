@@ -703,17 +703,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#documentation-complete-pour-presentation-dossier" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation complète pour présentation &amp; dossier
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#introduction-generale" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1099,28 +1088,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#annexes-a-inclure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ANNEXES À INCLURE
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#checklist-final-validation-c12" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CHECKLIST FINAL VALIDATION C12
-      
-    </span>
-  </a>
   
 </li>
       
@@ -1746,17 +1713,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#documentation-complete-pour-presentation-dossier" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Documentation complète pour présentation &amp; dossier
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#introduction-generale" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2145,28 +2101,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#annexes-a-inclure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ANNEXES À INCLURE
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#checklist-final-validation-c12" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CHECKLIST FINAL VALIDATION C12
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2185,7 +2119,6 @@
 
 
 <h1 id="solutions-algorithmiques-r-type">SOLUTIONS ALGORITHMIQUES R-TYPE</h1>
-<h2 id="documentation-complete-pour-presentation-dossier">Documentation complète pour présentation &amp; dossier</h2>
 <hr />
 <h2 id="introduction-generale">INTRODUCTION GÉNÉRALE</h2>
 <p>La compétence C12 porte sur l'identification de solutions (existantes ou originales) pour résoudre les problèmes posés en tenant compte des contraintes de performance et scalabilité. Elle se divise en deux observables :</p>
@@ -2828,72 +2761,6 @@ Server envoie P1 à t=0, P2 à t=50ms.
 Serveur peut pas savoir que client render à t=25ms, t=33ms, etc.
 Client can't do interpolation = seule option viable."</p>
 <hr />
-<h2 id="annexes-a-inclure">ANNEXES À INCLURE</h2>
-<pre><code>📁 Dossier_C12/
-
-C12.1_Algorithmes_Existants/
-├── C12.1_Tableau_Algos.xlsx (ou PNG)
-├── Code_AABB_CollisionSystem.cpp
-│   ├── checkAABB() fonction (lignes XXX)
-│   ├── check_player_projectiles_vs_enemies() (lignes XXX)
-│   └── Optimisations early-exit annotées
-├── Code_WeightedRandom_SpawnSystem.cpp
-│   └── generate_random_enemy_type() fonction
-└── Diagramme_AABB.png (4 conditions visuelles)
-
-C12.2_Algorithmes_Originaux/
-├── C12.2_Tableau_Solution.xlsx (ou PNG)
-├── Code_Interpolation_GamePlayState.cpp
-│   ├── InterpolationData struct
-│   ├── on_server_position_update() fonction
-│   └── get_interpolated_position() fonction
-├── Diagramme_Timeline_Interpolation.png
-│   └── Visuel t=0ms → t=100ms avec alpha values
-└── Benchmark_Interpolation.txt
-    └── Performance vs alternatives
-
-Documents/
-├── C12_Complexite_Analysis.pdf
-├── C12_Performance_Metrics.pdf
-└── C12_Algorithm_References.pdf
-    └── &quot;Real-Time Collision Detection&quot; (Ericson)
-</code></pre>
-<hr />
-<h2 id="checklist-final-validation-c12">CHECKLIST FINAL VALIDATION C12</h2>
-<pre><code>✅ C12.1 - Algorithmes existants :
-  ☑ 2+ algos existants implémentés (AABB, weighted random)
-  ☑ Références académiques (Ericson pour AABB)
-  ☑ Code fonctionnel complet
-  ☑ Complexité documentée (O(1) pour AABB)
-  ☑ Justification optimalité (40x vs pixel-perfect)
-  ☑ Utilisé dans industrie (Unity, Godot)
-  ☑ Preuves performance (50ns vs 2000ns)
-
-✅ C12.2 - Algorithmes originaux :
-  ☑ 1+ algo/solution original(e)
-  ☑ Problème spécifique R-Type (UDP 20Hz → 60FPS)
-  ☑ Justification &quot;pourquoi pas standard&quot; (context dépendant)
-  ☑ Code implémentation complet
-  ☑ Alternatives envisagées + rejetées
-  ☑ Complexité et performance (O(1) negligible overhead)
-
-✅ DOCUMENTATION :
-  ☑ Tableaux C12.1 + C12.2 générés
-  ☑ Code snippets commentés
-  ☑ Diagrammes visuels (AABB, timeline)
-  ☑ References académiques listées
-
-✅ ORAL (1-2 min) :
-  ☑ C12.1 (1 min) : 2 algos, pourquoi optimaux
-  ☑ C12.2 (1 min) : 1 algo original, pourquoi pertinent
-  ☑ Prêt pour questions (réponses ci-dessus)
-
-✅ FINALE :
-  ☑ Dossier organisé + annexes
-  ☑ Code + diagrammes + benchmarks
-  ☑ Capable d'expliquer chaque algo techniquement
-
-</code></pre>
 
 
 

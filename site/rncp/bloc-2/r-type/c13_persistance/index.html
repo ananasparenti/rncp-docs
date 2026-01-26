@@ -1402,7 +1402,11 @@
     <br><em>Comparatif des solutions de persistance</em>
 </div>
 
-<p>Dans la section suivante, nous détaillerons les solutions effectivement retenues pour le projet R-Type, en expliquant les choix réalisés pour chaque type de donnée et les structures utilisées en mémoire.</p>
+<p>La persistance des paramètres utilisateur est assurée par un mécanisme simple et fiable basé sur un fichier de configuration texte.</p>
+<p>Les réglages du jeu (tels que les options graphiques, les préférences de contrôle ou les paramètres de performance) sont sauvegardés dans un fichier nommé rtype_settings.cfg.
+La fonction dédiée à cette opération écrit les paramètres actuels dans ce fichier à chaque sauvegarde, garantissant ainsi la cohérence entre l’état du jeu et les données persistées.</p>
+<p>Chaque paramètre est enregistré sur une ligne distincte, selon un format clair et lisible de type clé=valeur, ce qui facilite à la fois la maintenance et l’éventuelle modification manuelle du fichier.
+Le fichier est généré ou écrasé à chaque sauvegarde afin de refléter fidèlement l’état courant des paramètres.</p>
 
 
 

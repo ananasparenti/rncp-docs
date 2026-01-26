@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#c11-segmentation-du-code-decomposition-en-sous-problemes" class="md-skip">
+        <a href="#c11-implementation-logicielle" class="md-skip">
           Aller au contenu
         </a>
       
@@ -686,6 +686,18 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#observable-1-organisation-du-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 1 : Organisation du code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔎 Observable 1 : Organisation du code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#architecture-modulaire-du-projet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -695,18 +707,6 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#observables-avec-exemples-concrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔎 Observables (avec exemples concrets)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔎 Observables (avec exemples concrets)">
-      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#1-mouvement-isole-ecs-oe" class="md-nav__link">
@@ -1484,6 +1484,18 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#observable-1-organisation-du-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔎 Observable 1 : Organisation du code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔎 Observable 1 : Organisation du code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#architecture-modulaire-du-projet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1493,18 +1505,6 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#observables-avec-exemples-concrets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        🔎 Observables (avec exemples concrets)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔎 Observables (avec exemples concrets)">
-      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#1-mouvement-isole-ecs-oe" class="md-nav__link">
@@ -1638,11 +1638,12 @@
 
 
 
-<h1 id="c11-segmentation-du-code-decomposition-en-sous-problemes">C11 : Segmentation du code (Décomposition en sous-problèmes)</h1>
+<h1 id="c11-implementation-logicielle">C11 : Implémentation logicielle</h1>
 <h2 id="objectif">🎯 Objectif</h2>
 <p>Segmenter chaque problème complexe en sous-problèmes pour obtenir des tâches atomiques, optimisées pour la performance, l’adaptabilité et la maintenabilité.</p>
 <hr />
-<h2 id="architecture-modulaire-du-projet">🌐 Architecture modulaire du projet</h2>
+<h2 id="observable-1-organisation-du-code">🔎 Observable 1 : Organisation du code</h2>
+<h3 id="architecture-modulaire-du-projet">🌐 Architecture modulaire du projet</h3>
 <ul>
 <li><strong>ECS</strong> : données (components) séparées de la logique (systems) dans <code>engine/</code> et <code>game/</code>.</li>
 <li><strong>Couche réseau</strong> : serveur dédié (<code>server/</code>) isolant rooms, protocole, state broadcast.</li>
@@ -1655,7 +1656,6 @@
 - Orchestration → Managers/States
 - I/O → Network/Graphics</p>
 <hr />
-<h2 id="observables-avec-exemples-concrets">🔎 Observables (avec exemples concrets)</h2>
 <h3 id="1-mouvement-isole-ecs-oe">1) Mouvement isolé (ECS, O(E))</h3>
 <ul>
 <li>Fichier : MovementSystem.cpp</li>
