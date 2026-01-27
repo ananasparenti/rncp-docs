@@ -2,6 +2,17 @@
 
 ## 🔎 Observable 1 : Code opérationnel
 
+Notre code est opérationnel, il marche.
+La preuve en voici une vidéo de démonstration d'éxécution d'un workflow.
+<div align="center">
+    <video width="80%" controls style="margin: 2em 0;">
+        <source src="../../../../assets/images/c21-démo.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
+    <br>
+    <em>Exécution d'un workflow.</em>
+</div>
+
 ## 🔎 Observable 2 : Nommage et formatage
 
 Le code côté client a été structuré de manière claire et cohérente afin de faciliter sa compréhension et sa maintenance.
