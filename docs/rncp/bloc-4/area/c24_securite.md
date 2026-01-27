@@ -37,6 +37,40 @@ const user = await this.prisma.user.create({
 const sessionResult = await this.createSession(user.id);
 ```
 
+```mermaid
+flowchart TD
+  A[User password input] --> B{validatePassword}
+  B -->|fails| B1[Return errors]
+  B -->|passes| C[generateSalt 16B random]
+  C --> D[deriveKey PBKDF2-SHA-256 100k iters 64-byte key]
+  D --> E[bufferToHex salt + hash]
+  E --> F[Store string: pbkdf2$iterations$saltHex$hashHex]
+
+  F --> V1[Verification start]
+  V1 --> V2[Parse storedHash parts]
+  V2 -->|invalid| V9[Return false]
+  V2 --> V3[hexToBuffer saltHex]
+  V3 --> V4[deriveKey with stored salt + iters]
+  V4 --> V5[bufferToHex derived]
+  V5 --> V6[timingSafeEqual?]
+  V6 -->|true| V7[Return true]
+  V6 -->|false| V8[Return false]
+
+  F --> M1[needsRehash check]
+  M1 -->|stored < policy| M2[Flag for rehash]
+  M1 -->|ok| M3[No action]
+```
+
+### Explications detaillees
+- Validation initiale: `validatePassword` impose longueur (>=8, <=128) et types de caracteres (minuscule, majuscule, chiffre) pour eviter les mots de passe trop faibles avant meme de les hacher.
+- Sel (salt): sequence aleatoire de 16 octets generee par `crypto.getRandomValues`. Le sel est concatene au mot de passe avant PBKDF2 pour rendre chaque hash unique; cela empeche qu'un meme mot de passe produise le meme hash entre utilisateurs et neutralise les tables arc-en-ciel.
+- Derivation PBKDF2: `deriveKey` applique PBKDF2-SHA-256 avec 100 000 iterations et une longueur de cle de 64 octets. Les iterations ralentissent les attaques par force brute; la longueur de cle assure une sortie suffisamment grande pour limiter les collisions pratiques.
+- Format de stockage: sel et hash sont convertis en hex et ranges dans `pbkdf2$iterations$saltHex$hashHex`. On stocke aussi le nombre d'iterations pour permettre de verifier dans le temps, et le prefixe `pbkdf2` sert d'identifiant d'algorithme.
+- Verification: on parse la chaine, on reconstruit le sel et les iterations, on re-applique PBKDF2 sur le mot de passe fourni, puis on compare le hash calcule et le hash stocke via `timingSafeEqual` afin d'eviter les attaques par chronometrage (la comparaison prend toujours le meme temps).
+- Rehash: `needsRehash` signale les hashes faits avec un nombre d'iterations devenu inferieur a la politique actuelle. Lors d'une prochaine authentification reussie, on peut re-hacher avec plus d'iterations pour renforcer les comptes sans forcer un reset global des mots de passe.
+
+
+
 - **Secrets chiffrés et accès restreint** : `protectedProcedure` impose auth, chiffrement `encrypt(value)`, omission du champ `value` dans les listes.
 
 	Pourquoi c’est probant : l’accès est conditionné à l’utilisateur authentifié, la donnée sensible est chiffrée au repos, et jamais renvoyée dans les réponses listées.
