@@ -1,0 +1,1 @@
+# Introduction au projet SoundWise

@@ -8,6 +8,10 @@ Que vous soyez étudiant, professionnel ou simplement curieux, laissez-vous guid
 
 ---
 
+✨ **Bloc 1 : Cadrer un projet de conception et développement d’une solution logicielle.**
+
+---
+
 ✨ **Bloc 2 : Concevoir une architecture logicielle avec le R-Type**
 
 ---
