@@ -53,3 +53,32 @@ L’analyse des échanges et du questionnaire a permis de définir les priorité
 Cette phase a couvert l’ensemble du périmètre fonctionnel du projet et constitue la base des choix de conception réalisés.
 
 ## 🔎 Observable 2 : Analyse des besoins - accessibilité
+
+### Identification des besoins spécifiques
+
+Les échanges menés, notamment avec un producteur malvoyant, ainsi que les réponses au questionnaire ont permis d’identifier plusieurs limites dans les logiciels de MAO actuels :
+- Interfaces très visuelles et peu adaptées aux déficiences visuelles
+- Compatibilité partielle avec les lecteurs d’écran
+- Navigation clavier incomplète
+- Manque de hiérarchisation claire des informations
+- Surcharge cognitive liée à la densité des interfaces
+
+Ces constats démontrent que l’accessibilité est encore insuffisamment prise en compte dans les outils de production musicale.
+
+### Prise en compte des normes en vigueur
+
+Les besoins identifiés ont été analysés au regard des principes d’accessibilité numérique (notamment les recommandations WCAG), afin de garantir :
+- Une navigation alternative (clavier, assistance vocale)
+- Une structuration claire et logique des contenus
+- Un contraste visuel adapté
+- Une simplification des parcours utilisateurs
+
+### Impacts sur la conception de SoundWise
+
+L’analyse a conduit à intégrer dès la phase de conception :
+- Une navigation entièrement accessible au clavier
+- Une compatibilité avec les lecteurs d’écran
+- Une interface épurée et hiérarchisée
+- Un accompagnement pédagogique progressif réduisant la charge cognitive
+
+Ainsi, les besoins des personnes en situation de handicap ont été intégrés en amont du développement, conformément aux exigences de la compétence C1 (C01.2).

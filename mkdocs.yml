@@ -17,6 +17,17 @@ theme:
 nav:
   - Accueil: index.md
   - RNCP:
+      - Bloc 1 – Audit et diagnostic sécurité:
+          - Présentation: rncp/bloc-1/index.md
+          - Projet Soundwise:
+              - Introduction: rncp/bloc-1/soundwise/index.md
+              - Architecture détaillée:
+                  - C1 – Besoins et périmètre: rncp/bloc-1/soundwise/c1_besoins.md
+                  - C2 – Audit sécurité: rncp/bloc-1/soundwise/c2_audit.md
+                  - C3 – Spécifications techniques: rncp/bloc-1/soundwise/c3_specs.md
+                  - C4 – Benchmark et comparaison: rncp/bloc-1/soundwise/c4_benchmark.md
+                  - C5 – Prévisions et recommandations: rncp/bloc-1/soundwise/c5_previsions.md
+              - Conclusion: rncp/bloc-1/soundwise/conclusion.md
       - Bloc 2 – Concevoir une architecture logicielle:
           - Présentation: rncp/bloc-2/index.md
           - Projet R-Type:
@@ -43,5 +54,6 @@ nav:
                   - C23 – Développement back-end: rncp/bloc-4/area/c23_backend.md
                   - C24 – Sécurité back-end: rncp/bloc-4/area/c24_securite.md
               - Conclusion: rncp/bloc-4/area/conclusion.md
+        
   - Annexes:
       - Veille: annexes/veille.md
