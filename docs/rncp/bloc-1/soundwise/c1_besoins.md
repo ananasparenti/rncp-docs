@@ -80,5 +80,3 @@ L’analyse a conduit à intégrer dès la phase de conception :
 - Une compatibilité avec les lecteurs d’écran
 - Une interface épurée et hiérarchisée
 - Un accompagnement pédagogique progressif réduisant la charge cognitive
-
-Ainsi, les besoins des personnes en situation de handicap ont été intégrés en amont du développement, conformément aux exigences de la compétence C1 (C01.2).
