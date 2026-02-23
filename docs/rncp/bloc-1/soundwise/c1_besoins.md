@@ -43,7 +43,7 @@ Les parties prenantes souhaitent :
 
 TODO : mettre photo de question 11
 
-### Synthèse de l’analyse
+###      de l’analyse
 
 L’analyse des échanges et du questionnaire a permis de définir les priorités fonctionnelles de SoundWise :
 - Concevoir une interface intuitive
